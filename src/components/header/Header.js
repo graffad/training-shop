@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink,useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { ReactComponent as Phone } from "./icons/phone.svg";
 import { ReactComponent as Map } from "./icons/map.svg";
@@ -14,6 +14,7 @@ import { ReactComponent as CartSvg } from "./icons/cart.svg";
 import { headerNav } from "../constants/constants";
 
 export default function Header() {
+  const location = useLocation()
   const [burgerIsActive, setBurgerIsActive] = useState(false);
   const headerRef = useRef(0);
   const [burgerMargin, setBurgerMargin] = useState(90);
@@ -30,6 +31,8 @@ export default function Header() {
     }
   }
   useEffect(() => {
+    setBurgerIsActive(false);
+    document.body.classList.remove("fixed-body");
     window.addEventListener("resize", onResize);
     document.addEventListener("click", (event) => {
       onClickOver(event.target);
@@ -40,7 +43,9 @@ export default function Header() {
         onClickOver(event.target);
       });
     };
-  }, []);
+  }, [location]);
+
+
 
   return (
     <>

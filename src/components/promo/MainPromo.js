@@ -1,25 +1,17 @@
 import { Link } from "react-router-dom";
-import { ReactComponent as Arrow } from "../../images/arr-left.svg";
+import Slider from "../slider/Slider";
+import { sliderPromo } from "../constants/constants";
 
 export default function MainPromo() {
   return (
     <section className="main-promo-outer">
       <div className="container">
         <div className="main-promo-inner">
-          <div className="main-promo-inner--left main-promo-inner__slider slider">
-            <button type="button" className="slider-button slider-button--left">
-              <Arrow />
-            </button>
-            <div className="slider-banner">
-              <p className="slider-banner__header">BANNER</p>
-              <p className="slider-banner__text">your Title text </p>
-            </div>
-            <button
-              type="button"
-              className="slider-button slider-button--right"
-            >
-              <Arrow />
-            </button>
+          <div
+            className="main-promo-inner--left main-promo-inner__slider"
+            data-test-id="main-slider"
+          >
+            <Slider slides={sliderPromo} />
           </div>
           <div className="main-promo-inner--right">
             <Link to="/women" className="main-promo-inner__category">

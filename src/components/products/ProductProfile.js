@@ -7,11 +7,7 @@ import { ReactComponent as Returns } from "../../images/return.svg";
 import { ReactComponent as Mail } from "../../images/mail.svg";
 import { ReactComponent as Cloud } from "../../images/cloud.svg";
 import StarsRate from "./StarsRate";
-import Products from "./Products";
-import p0 from "./tmp-prod/p0.png";
-import p1 from "./tmp-prod/p1.png";
-import p2 from "./tmp-prod/p2.png";
-import p3 from "./tmp-prod/p3.png";
+import Slider from "../slider/Slider";
 import c0 from "./tmp-prod/c0.png";
 import c1 from "./tmp-prod/c1.png";
 import c2 from "./tmp-prod/c2.png";
@@ -23,6 +19,8 @@ import visa from "../../images/credit-cards/visa_x42.png";
 import mastercard from "../../images/credit-cards/mastercard_x42.png";
 import discover from "../../images/credit-cards/discover_x42.png";
 import american from "../../images/credit-cards/american-express_x42.png";
+import { sliderProduct, data } from "../constants/constants";
+import SliderRelatedProducts from "../slider/SliderRelatedProducts";
 
 export default function ProductProfile({ params }) {
   return (
@@ -30,53 +28,11 @@ export default function ProductProfile({ params }) {
       <section className="product-profile-outer">
         <div className="container">
           <div className="product-profile-inner">
-            <div className="product-profile-left">
-              <div className="product-profile-slider-aside">
-                <div className="slider-nav-top-arrows">
-                  <button
-                    type="button"
-                    className="slider-button slider-button--top"
-                  >
-                    <Arrow />
-                  </button>
-                  <button
-                    type="button"
-                    className="slider-button slider-button--bottom"
-                  >
-                    <Arrow />
-                  </button>
-                </div>
-
-                <div className="product-profile-slider-aside__img slider-nav-img">
-                  <img src={p0} alt="" />
-                </div>
-                <div className="product-profile-slider-aside__img slider-nav-img">
-                  <img src={p1} alt="" />
-                </div>
-
-                <div className="product-profile-slider-aside__img slider-nav-img">
-                  <img src={p2} alt="" />
-                </div>
-                <div className="product-profile-slider-aside__img slider-nav-img">
-                  <img src={p3} alt="" />
-                </div>
-              </div>
-
-              <div className="product-profile-slider">
-                <button
-                  type="button"
-                  className="product-profile-slider__button--left slider-button slider-button--left"
-                >
-                  <Arrow />
-                </button>
-                <img src={p0} alt="" />
-                <button
-                  type="button"
-                  className="product-profile-slider__button--right slider-button slider-button--right"
-                >
-                  <Arrow />
-                </button>
-              </div>
+            <div
+              className="product-profile-slider"
+              data-test-id="product-slider"
+            >
+              <Slider slides={sliderProduct} showImgNav />
             </div>
             <div className="product-profile-right">
               <div className="product-profile-colors">
@@ -232,7 +188,10 @@ export default function ProductProfile({ params }) {
           </div>
         </div>
       </section>
-      <section className="product-profile-related-outer">
+      <section
+        className="product-profile-related-outer"
+        data-test-id="related-slider"
+      >
         <div className="container">
           <div className="product-profile-related-inner">
             <h2 className="product-profile-related-inner__header">
@@ -241,20 +200,23 @@ export default function ProductProfile({ params }) {
             <div className="product-profile-related-inner__slider-controls">
               <button
                 type="button"
-                className="slider-button--left slider-button"
+                className="slider-related-button slider-related-button--prev"
               >
                 <Arrow />
               </button>
               <button
-                  type="button"
-                  className="slider-button--right slider-button"
+                type="button"
+                className="slider-related-button slider-related-button--next"
               >
                 <Arrow />
               </button>
             </div>
           </div>
+          <SliderRelatedProducts
+            slides={data(params.category)}
+            productType={params.category}
+          />
         </div>
-        <Products productType={params.category} limit={4} />
       </section>
     </>
   );

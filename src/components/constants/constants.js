@@ -1,3 +1,5 @@
+import bannerImg from "../promo/images/banner.jpg";
+
 const headerNav = [
   { id: 1, path: "about", name: "About Us" },
   { id: 2, path: "women", name: "Women" },
@@ -177,11 +179,41 @@ const menCl = [
   },
 ];
 
-module.exports = {
+const sliderPromo = [
+  {
+    id: 1,
+    img: bannerImg,
+    banner: { header: "BANNER", text: "your Title text" },
+  },
+  { id: 2, img: bannerImg, banner: { header: "recruiters", text: "I'm waiting for..." } },
+  { id: 3, img: bannerImg, banner: { header: "recruiters", text: "a job offer" } },
+];
+const sliderProduct = [
+  { id: 1, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
+  { id: 2, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
+  { id: 3, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
+  { id: 4, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
+];
+
+const data = (productType) => {
+  switch (productType) {
+    case "women":
+      return womenCl;
+    case "men":
+      return menCl;
+    default:
+      return [];
+  }
+};
+
+export {
   headerNav,
   footerNavCategories,
   footerNavInfo,
   footerNavUseful,
   womenCl,
   menCl,
+  sliderPromo,
+  sliderProduct,
+  data,
 };
