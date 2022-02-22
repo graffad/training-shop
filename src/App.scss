@@ -341,29 +341,39 @@ svg {
   max-width: 94px;
   width: 100%;
   overflow: hidden;
-  //@media screen and (max-width: 450px){
-  //  max-width: 100%;
-  //}
+  @media screen and (max-width: 450px){
+    max-width: 100%;
+  }
 }
 .slider-aside-nav{
   display: flex;
   justify-content: space-between;
+  @media screen and (max-width: 450px){
+    display: none;
+  }
 }
 .slider-aside {
   height: 520px;
-  //@media screen and (max-width: 450px){
-  //  height: auto;
-  //}
-  margin-top: 16px;
-  &__item {
-    width: 94px;
-    height: 114px;
-    opacity: 0.5;
+  @media screen and (max-width: 450px){
+    height: auto;
+    img{
+      object-fit: contain;
+    }
+  }
+  margin-top: 8px;
+  &__image-wrapper{
+    max-width: 94px;
+    max-height: 114px;
+    width: 100%;
+    height: 100%;
     img {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
+  }
+  &__item {
+    opacity: 0.5;
     &--active {
       opacity: 1;
     }
@@ -591,9 +601,9 @@ svg {
     max-width: 448px;
     margin: 0;
   }
-  //@media screen and (max-width: 450px){
-  //  flex-direction: column;
-  //}
+  @media screen and (max-width: 450px){
+    flex-direction: column;
+  }
 }
 
 //------</>left--------

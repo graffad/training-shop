@@ -36,25 +36,32 @@ export default function Slider({ slides = [], showImgNav = false }) {
 
           <Swiper
             onSwiper={setSliderNavImages}
-            slidesPerView="auto"
-            spaceBetween={16}
+            // slidesPerView="auto"
+            spaceBetween={12}
             className="slider-aside"
-            direction="vertical"
+            // direction="vertical"
             // navigation={{
             //   prevEl: ".slider-button--top",
             //   nextEl: ".slider-button--bottom",
             //   disabledClass: "slider-button--disabled",
             // }}
             // controller={{control:sliderOne}}
-            // breakpoints={{
-            //   450: {
-            //     direction: "vertical",
-            //   },
-            // }}
+            breakpoints={{
+              360: {
+                slidesPerView: 4,
+                direction: "horizontal",
+              },
+              450: {
+                direction: "vertical",
+                slidesPerView: 4,
+              },
+            }}
           >
             {slides.map((item) => (
               <SwiperSlide key={item.id} className="slider-aside__item">
-                <img src={item.img} alt="" />
+                <div className="slider-aside__image-wrapper">
+                  <img src={item.img} alt="" />
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
