@@ -13,13 +13,27 @@ export default function SliderRelatedProducts({
 
   return (
     <Swiper
-      slidesPerView="auto"
+      // slidesPerView="auto"
       className="slider-related"
       spaceBetween={30}
       navigation={{
         prevEl: ".slider-related-button--prev",
         nextEl: ".slider-related-button--next",
         disabledClass: "slider-button--disabled",
+      }}
+      breakpoints={{
+        360: {
+          slidesPerView: 1,
+        },
+        600: {
+          slidesPerView: 2,
+        },
+        850: {
+          slidesPerView: 3,
+        },
+        1100: {
+          slidesPerView: 4,
+        },
       }}
     >
       {slides.map((item) => (

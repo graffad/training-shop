@@ -13,24 +13,27 @@ export default function Slider({ slides = [], showImgNav = false }) {
     <>
       {showImgNav ? (
         <div className="slider-aside-wrapper">
-          <button
-            type="button"
-            className="slider-button--top"
-            onClick={() => {
-              document.querySelector(".slider-slide-prev").click();
-            }}
-          >
-            <Arrow />
-          </button>
-          <button
-            type="button"
-            className="slider-button--bottom"
-            onClick={() => {
-              document.querySelector(".slider-slide-next").click();
-            }}
-          >
-            <Arrow />
-          </button>
+          <div className="slider-aside-nav">
+            <button
+              type="button"
+              className="slider-button--top"
+              onClick={() => {
+                document.querySelector(".slider-slide-prev").click();
+              }}
+            >
+              <Arrow />
+            </button>
+            <button
+              type="button"
+              className="slider-button--bottom"
+              onClick={() => {
+                document.querySelector(".slider-slide-next").click();
+              }}
+            >
+              <Arrow />
+            </button>
+          </div>
+
           <Swiper
             onSwiper={setSliderNavImages}
             slidesPerView="auto"
