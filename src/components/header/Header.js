@@ -16,7 +16,7 @@ import { headerNav } from "../constants/constants";
 export default function Header() {
   const location = useLocation()
   const [burgerIsActive, setBurgerIsActive] = useState(false);
-  const headerRef = useRef(0);
+  const headerRef = useRef(null);
   const [burgerMargin, setBurgerMargin] = useState(90);
 
   // if too many links and overflow
@@ -31,17 +31,15 @@ export default function Header() {
     }
   }
   useEffect(() => {
-    setBurgerIsActive(false);
     document.body.classList.remove("fixed-body");
     window.addEventListener("resize", onResize);
     document.addEventListener("click", (event) => {
       onClickOver(event.target);
     });
     return () => {
+      setBurgerIsActive(false);
       window.removeEventListener("resize", onResize);
-      document.removeEventListener("click", (event) => {
-        onClickOver(event.target);
-      });
+      document.removeEventListener("click", onClickOver);
     };
   }, [location]);
 

@@ -87,7 +87,7 @@ export default function PromoProducts({ productType }) {
           </div>
         </div>
       </div>
-      <Products productType={productType} />
+      <Products productType={productType} limit={8} />
       <div className="container">
         <button
           type="button"

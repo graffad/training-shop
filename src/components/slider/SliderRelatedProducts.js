@@ -9,8 +9,7 @@ export default function SliderRelatedProducts({
   slides = [],
   productType = "",
 }) {
-  // need a refactor products list to reuse component
-
+  // problems with img fit with max-hw
   return (
     <Swiper
       // slidesPerView="auto"
@@ -45,26 +44,31 @@ export default function SliderRelatedProducts({
             data-test-id={`clothes-card-${productType}`}
           >
             {item.discount ? (
-              <div className="products-inner-card__discount">{`-${item.discount}%`}</div>
+              <div className="products-inner-card__discount">
+                {item.discount}
+              </div>
             ) : (
               ""
             )}
             <div className="products-inner-card__image">
-              <img src={`${process.env.PUBLIC_URL}/${item.img}`} alt="" />
+              <img
+                src={`https://training.cleverland.by/shop/${item.images[0].url}`}
+                alt=""
+              />
             </div>
-            <div className="products-inner-card__title">{item.title}</div>
+            <div className="products-inner-card__title">{item.name}</div>
             <div className="products-inner-card__price">
               {`$ ${item.price.toFixed(2)}`}
-              {item.oldPrice ? (
-                <span className="products-inner-card__price--old">{`$ ${item.oldPrice.toFixed(
-                  2
-                )}`}</span>
-              ) : (
-                ""
-              )}
+              {/* {item.oldPrice ? ( */}
+              {/*  <span className="products-inner-card__price--old">{`$ ${item.oldPrice.toFixed( */}
+              {/*    2 */}
+              {/*  )}`}</span> */}
+              {/* ) : ( */}
+              {/*  "" */}
+              {/* )} */}
 
               <div className="products-inner-card__rate">
-                <StarsRate rate={item.rate} />
+                <StarsRate rate={item.rating} />
               </div>
             </div>
           </Link>

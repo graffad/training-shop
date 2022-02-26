@@ -341,27 +341,27 @@ svg {
   max-width: 94px;
   width: 100%;
   overflow: hidden;
-  @media screen and (max-width: 450px){
+  @media screen and (max-width: 450px) {
     max-width: 100%;
   }
 }
-.slider-aside-nav{
+.slider-aside-nav {
   display: flex;
   justify-content: space-between;
-  @media screen and (max-width: 450px){
+  @media screen and (max-width: 450px) {
     display: none;
   }
 }
 .slider-aside {
   height: 520px;
-  @media screen and (max-width: 450px){
+  @media screen and (max-width: 450px) {
     height: auto;
-    img{
+    img {
       object-fit: contain;
     }
   }
   margin-top: 8px;
-  &__image-wrapper{
+  &__image-wrapper {
     max-width: 94px;
     max-height: 114px;
     width: 100%;
@@ -493,14 +493,14 @@ svg {
     font-weight: bold;
   }
   &-card__image {
-    max-width: 255px;
-    width: 100%;
-    max-height: 318px;
-    height: 100%;
-    //width: 255px;
-    //height: 318px;
+    //max-width: 255px;
+    //width: 100%;
+    //max-height: 318px;
+    //height: 100%;
+    width: 255px;
+    height: 318px;
     img {
-      display: block;
+      //display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -509,6 +509,7 @@ svg {
   &-card__title {
     color: rgba(18, 18, 18, 0.6);
     margin-top: 16px;
+    @include limitMaxRows(1);
   }
   &-card__price {
     font-weight: bold;
@@ -581,7 +582,7 @@ svg {
 .product-profile-inner {
   display: flex;
   gap: 30px;
-  justify-content: center;
+  //justify-content: center;
   @media screen and (max-width: 1010px) {
     flex-wrap: wrap;
   }
@@ -591,6 +592,7 @@ svg {
 //  display: flex;
 //}
 
+//--------------slider-product--------------------
 .product-profile-slider {
   max-height: 560px;
   width: 100%;
@@ -601,7 +603,7 @@ svg {
     max-width: 448px;
     margin: 0;
   }
-  @media screen and (max-width: 450px){
+  @media screen and (max-width: 450px) {
     flex-direction: column;
   }
 }
@@ -611,6 +613,7 @@ svg {
 //------right--------
 .product-profile-right {
   max-width: 522px;
+  width: 100%;
   @media screen and (max-width: 1010px) {
     max-width: 100%;
   }
@@ -635,6 +638,15 @@ svg {
   max-height: 64px;
   position: relative;
   margin-right: 16px;
+  input {
+    appearance: none;
+    &:checked + label > img {
+      box-shadow: 0 0 0 2px black;
+    }
+  }
+  label {
+    cursor: pointer;
+  }
   img {
     width: 100%;
     height: 100%;
@@ -650,18 +662,25 @@ svg {
 .product-profile-sizes__variant {
   margin-right: 16px;
   background: #f8f8f8;
-  width: 40px;
-  height: 40px;
+  //width: 40px;
+  //height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  //overflow: hidden;
   font-weight: 600;
   font-size: 12px;
   color: rgba(18, 18, 18, 0.7);
   line-height: 13px;
-  &--active {
-    border: 2px solid #121212;
+  input {
+    appearance: none;
+    &:checked + label {
+      box-shadow: 0 0 0 2px black;
+    }
+  }
+  label {
+    cursor: pointer;
+    padding: 12px;
   }
 }
 .product-profile-sizes__guide {
@@ -872,7 +891,9 @@ svg {
       margin: 0 auto;
     }
   }
+
 }
+
 .slider-related-button {
   @extend .slider-button;
   position: relative;

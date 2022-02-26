@@ -1,4 +1,6 @@
 import bannerImg from "../promo/images/banner.jpg";
+import PRODUCTS from "./productsData";
+
 
 const headerNav = [
   { id: 1, path: "about", name: "About Us" },
@@ -195,12 +197,12 @@ const sliderProduct = [
   { id: 4, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
 ];
 
-const data = (productType) => {
+const clothes = (productType) => {
   switch (productType) {
     case "women":
-      return womenCl;
+      return PRODUCTS.women;
     case "men":
-      return menCl;
+      return PRODUCTS.men;
     default:
       return [];
   }
@@ -211,9 +213,7 @@ export {
   footerNavCategories,
   footerNavInfo,
   footerNavUseful,
-  womenCl,
-  menCl,
   sliderPromo,
   sliderProduct,
-  data,
+  clothes,
 };

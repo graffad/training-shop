@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { womenCl, menCl, data } from "../constants/constants";
+import { clothes } from "../constants/constants";
 import ProductsFilters from "./ProductsFilters";
 import Pagination from "../Pagination";
 import StarsRate from "./StarsRate";
@@ -12,9 +12,9 @@ export default function Products({
 }) {
   const arr = () => {
     if (limit === 0) {
-      return data(productType);
+      return clothes(productType);
     }
-    return data(productType).slice(0, limit);
+    return clothes(productType).slice(0, limit);
   };
   return (
     <section className="products-outer" data-test-id={`clothes-${productType}`}>
@@ -29,26 +29,25 @@ export default function Products({
               data-test-id={`clothes-card-${productType}`}
             >
               {item.discount ? (
-                <div className="products-inner-card__discount">{`-${item.discount}%`}</div>
+                <div className="products-inner-card__discount">{item.discount}</div>
               ) : (
                 ""
               )}
               <div className="products-inner-card__image">
-                <img src={`${process.env.PUBLIC_URL}/${item.img}`} alt="" />
+                <img src={`https://training.cleverland.by/shop/${item.images[0].url}`} alt="" />
               </div>
-              <div className="products-inner-card__title">{item.title}</div>
+              <div className="products-inner-card__title">{item.name}</div>
               <div className="products-inner-card__price">
                 {`$ ${item.price.toFixed(2)}`}
-                {item.oldPrice ? (
-                  <span className="products-inner-card__price--old">{`$ ${item.oldPrice.toFixed(
-                    2
-                  )}`}</span>
-                ) : (
-                  ""
-                )}
-
+                {/* {item.oldPrice ? ( */}
+                {/*  <span className="products-inner-card__price--old">{`$ ${item.oldPrice.toFixed( */}
+                {/*    2 */}
+                {/*  )}`}</span> */}
+                {/* ) : ( */}
+                {/*  "" */}
+                {/* )} */}
                 <div className="products-inner-card__rate">
-                  <StarsRate rate={item.rate} />
+                  <StarsRate rate={item.rating} />
                 </div>
               </div>
             </Link>

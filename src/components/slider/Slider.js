@@ -5,10 +5,16 @@ import { ReactComponent as Arrow } from "../../images/arr-left.svg";
 
 SwiperCore.use([Pagination, Navigation, Controller, Thumbs]);
 
-export default function Slider({ slides = [], showImgNav = false }) {
+export default function Slider({
+  slides = [],
+  showImgNav = false,
+  discount = null,
+}) {
   const [sliderNavImages, setSliderNavImages] = useState(null);
   // const [sliderOne, setSliderOne] = useState(null);
 
+  // problems with image fit with max-wh after link or rerender or resize
+  // unexpected behaviour sometime - shows piece of next slide on rerender
   return (
     <>
       {showImgNav ? (
@@ -60,7 +66,10 @@ export default function Slider({ slides = [], showImgNav = false }) {
             {slides.map((item) => (
               <SwiperSlide key={item.id} className="slider-aside__item">
                 <div className="slider-aside__image-wrapper">
-                  <img src={item.img} alt="" />
+                  <img
+                    src={`https://training.cleverland.by/shop/${item.url}`}
+                    alt=""
+                  />
                 </div>
               </SwiperSlide>
             ))}
@@ -90,7 +99,21 @@ export default function Slider({ slides = [], showImgNav = false }) {
       >
         {slides.map((item) => (
           <SwiperSlide key={item.id} className="slider__item">
-            <img src={item.img} alt="" />
+            {discount ? (
+              <span className="slider-discount products-inner-card__discount">
+                {discount}
+              </span>
+            ) : (
+              ""
+            )}
+            <img
+              src={
+                item.banner
+                  ? item.img
+                  : `https://training.cleverland.by/shop/${item.url}`
+              }
+              alt=""
+            />
             {item.banner ? (
               <div className="slider-banner">
                 <p className="slider-banner__header">{item.banner.header}</p>

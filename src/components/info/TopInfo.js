@@ -17,7 +17,7 @@ export default function TopInfo({ params,productData }) {
 
           {params.id ? (
             <Link to={`/${params.category}/${params.id}`}>
-              &nbsp; ► {productData?.title}
+              &nbsp; ► {productData?.name}
             </Link>
           ) : (
             ""
@@ -34,7 +34,7 @@ export default function TopInfo({ params,productData }) {
             params.id ? "top-info__title--big" : ""
           }`}
         >
-          {params.id ? productData?.title: params.category}
+          {params.id ? productData?.name: params.category}
         </h1>
       </div>
     </section>
