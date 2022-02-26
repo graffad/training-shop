@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import {useState} from "react"
 import Products from "../products/Products";
 
 export default function PromoProducts({ productType }) {
@@ -14,6 +15,10 @@ export default function PromoProducts({ productType }) {
         return "";
     }
   };
+  
+  const [filterPromo,setFilterPromo] = useState("isNewArrivals")
+  
+  
   // input name issue with tracking - should be static/dynamic ?
   // problem with static
 
@@ -29,6 +34,8 @@ export default function PromoProducts({ productType }) {
               className="promo-products-inner-filters__radio"
               id={`${productType}-r1`}
               defaultChecked
+              value="isNewArrivals"
+              onChange={(event => setFilterPromo(event.target.value))}
             />
             <label
               htmlFor={`${productType}-r1`}
@@ -41,6 +48,8 @@ export default function PromoProducts({ productType }) {
               name={`${productType}-promo-filter`}
               className="promo-products-inner-filters__radio"
               id={`${productType}-r2`}
+              value="isSpecial"
+              onChange={(event => setFilterPromo(event.target.value))}
             />
             <label
               htmlFor={`${productType}-r2`}
@@ -53,6 +62,8 @@ export default function PromoProducts({ productType }) {
               name={`${productType}-promo-filter`}
               className="promo-products-inner-filters__radio"
               id={`${productType}-r3`}
+              value="isBestseller"
+              onChange={(event => setFilterPromo(event.target.value))}
             />
             <label
               htmlFor={`${productType}-r3`}
@@ -65,6 +76,8 @@ export default function PromoProducts({ productType }) {
               name={`${productType}-promo-filter`}
               className="promo-products-inner-filters__radio"
               id={`${productType}-r4`}
+              value="isMostViewed"
+              onChange={(event => setFilterPromo(event.target.value))}
             />
             <label
               htmlFor={`${productType}-r4`}
@@ -77,6 +90,8 @@ export default function PromoProducts({ productType }) {
               name={`${productType}-promo-filter`}
               className="promo-products-inner-filters__radio"
               id={`${productType}-r5`}
+              value="isFeatured"
+              onChange={(event => setFilterPromo(event.target.value))}
             />
             <label
               htmlFor={`${productType}-r5`}
@@ -87,7 +102,7 @@ export default function PromoProducts({ productType }) {
           </div>
         </div>
       </div>
-      <Products productType={productType} limit={8} />
+      <Products productType={productType} limit={8} filterPromo={filterPromo}/>
       <div className="container">
         <button
           type="button"
