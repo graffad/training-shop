@@ -1,7 +1,6 @@
 import bannerImg from "../promo/images/banner.jpg";
 import PRODUCTS from "./productsData";
 
-
 const headerNav = [
   { id: 1, path: "about", name: "About Us" },
   { id: 2, path: "women", name: "Women" },
@@ -31,154 +30,12 @@ const footerNavUseful = [
   { id: 4, path: "privacy", name: "Privacy Policy" },
 ];
 
-const womenCl = [
-  {
-    id: 1,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/w1.jpg",
-    discount: null,
-  },
-  {
-    id: 2,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: 60.0,
-    img: "./tmp/w2.jpg",
-    discount: 50,
-  },
-  {
-    id: 3,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/w3.jpg",
-    discount: null,
-  },
-  {
-    id: 4,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/w4.jpg",
-    discount: null,
-  },
-  {
-    id: 5,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/w5.jpg",
-    discount: null,
-  },
-  {
-    id: 6,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/w6.jpg",
-    discount: null,
-  },
-  {
-    id: 7,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/w7.jpg",
-    discount: null,
-  },
-  {
-    id: 8,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/w8.jpg",
-    discount: null,
-  },
-];
-
-const menCl = [
-  {
-    id: 1,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/m1.jpg",
-    discount: null,
-  },
-  {
-    id: 2,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/m2.jpg",
-    discount: null,
-  },
-  {
-    id: 3,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/m3.jpg",
-    discount: null,
-  },
-  {
-    id: 4,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/m4.jpg",
-    discount: null,
-  },
-  {
-    id: 5,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/m5.jpg",
-    discount: null,
-  },
-  {
-    id: 6,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/m6.jpg",
-    discount: null,
-  },
-  {
-    id: 7,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/m7.jpg",
-    discount: null,
-  },
-  {
-    id: 8,
-    title: "Women's tracksuit Q109",
-    price: 30.0,
-    rate: 4,
-    oldPrice: null,
-    img: "./tmp/m8.jpg",
-    discount: null,
-  },
+const PROMO_FILTERS = [
+  { particularName: "isNewArrivals", name: "NEW ARRIVALS" },
+  { particularName: "isSpecial", name: "SPECIALS" },
+  { particularName: "isBestseller", name: "BESTSELLERS" },
+  { particularName: "isMostViewed", name: "MOST VIEWED" },
+  { particularName: "isFeatured", name: "FEATURED PRODUCTS" },
 ];
 
 const sliderPromo = [
@@ -187,8 +44,16 @@ const sliderPromo = [
     img: bannerImg,
     banner: { header: "BANNER", text: "your Title text" },
   },
-  { id: 2, img: bannerImg, banner: { header: "recruiters", text: "I'm waiting for..." } },
-  { id: 3, img: bannerImg, banner: { header: "recruiters", text: "a job offer" } },
+  {
+    id: 2,
+    img: bannerImg,
+    banner: { header: "recruiters", text: "I'm waiting for..." },
+  },
+  {
+    id: 3,
+    img: bannerImg,
+    banner: { header: "recruiters", text: "a job offer" },
+  },
 ];
 const sliderProduct = [
   { id: 1, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
@@ -216,4 +81,5 @@ export {
   sliderPromo,
   sliderProduct,
   clothes,
+  PROMO_FILTERS,
 };
