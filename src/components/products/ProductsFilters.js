@@ -101,17 +101,14 @@ export default function ProductsFilters({
           <h4 className="products-filters-column-header">COLOR</h4>
           <ul className="products-filters-column" data-test-id="filters-color">
             {FILTERS.colors.map((color, index) => (
-              <li
-                key={color}
-                className="products-filters-column__item"
-                data-test-id={`filter-color-${color}`}
-              >
+              <li key={color} className="products-filters-column__item">
                 <input
                   className="products-filters-column__item-input"
                   type="checkbox"
                   name="color"
                   id={color}
                   value={color}
+                  data-test-id={`filter-color-${color}`}
                   onChange={(event) => {
                     changeFilter("colors", event.target);
                   }}
@@ -130,16 +127,13 @@ export default function ProductsFilters({
           <h4 className="products-filters-column-header">SIZE</h4>
           <ul className="products-filters-column" data-test-id="filters-size">
             {FILTERS.sizes.map((size) => (
-              <li
-                key={size}
-                className="products-filters-column__item"
-                data-test-id={`filter-size-${size}`}
-              >
+              <li key={size} className="products-filters-column__item">
                 <input
                   className="products-filters-column__item-input"
                   type="checkbox"
                   value={size}
                   id={size}
+                  data-test-id={`filter-size-${size}`}
                   name="size"
                   onChange={(event) => {
                     changeFilter("sizes", event.target);
@@ -159,17 +153,14 @@ export default function ProductsFilters({
           <h4 className="products-filters-column-header">BRAND</h4>
           <ul className="products-filters-column" data-test-id="filters-brand">
             {FILTERS.brands.map((brand) => (
-              <li
-                key={brand}
-                className="products-filters-column__item"
-                data-test-id={`filter-brand-${brand}`}
-              >
+              <li key={brand} className="products-filters-column__item">
                 <input
                   className="products-filters-column__item-input"
                   type="checkbox"
                   value={brand}
                   id={brand}
                   name="brand"
+                  data-test-id={`filter-brand-${brand}`}
                   onChange={(event) => {
                     changeFilter("brands", event.target);
                   }}
