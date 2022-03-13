@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/training-shop/static/css/main.8bf81ef1.css",
-    "main.js": "/training-shop/static/js/main.f4469244.js",
+    "main.css": "/training-shop/static/css/main.d0cc860e.css",
+    "main.js": "/training-shop/static/js/main.acfcb25e.js",
     "static/js/787.47ca6e30.chunk.js": "/training-shop/static/js/787.47ca6e30.chunk.js",
     "static/media/person1.png": "/training-shop/static/media/person1.dbfafdbfe2b215a3150f.png",
     "static/media/banner.jpg": "/training-shop/static/media/banner.ba5d4eb3d9420781b5f8.jpg",
@@ -36,17 +36,18 @@
     "static/media/search.svg": "/training-shop/static/media/search.3e369ae61d94eb94115c1eb102ed7764.svg",
     "static/media/mail.svg": "/training-shop/static/media/mail.fe58a9c8dee830cdc191fffa72e0c794.svg",
     "static/media/facebook.svg": "/training-shop/static/media/facebook.6d8ca4600d8c3308aeea5670bcc91faf.svg",
+    "static/media/trash.svg": "/training-shop/static/media/trash.70a05ab6c85640f654455af050e24b35.svg",
     "static/media/cloud.svg": "/training-shop/static/media/cloud.dc8eba27c575fde8d7bc7d778f0df5c5.svg",
     "static/media/compare.svg": "/training-shop/static/media/compare.3b621aec2a61da5155deff199417102f.svg",
     "static/media/cart.svg": "/training-shop/static/media/cart.f83a75a7371832b4fcec9fd8fd5f6474.svg",
     "static/media/dsp-line.svg": "/training-shop/static/media/dsp-line.44db9bee8523b700cc8144da2caaed0d.svg",
     "static/media/arr-left.svg": "/training-shop/static/media/arr-left.2cf11967220c48eb71fda75cd3a24376.svg",
-    "main.8bf81ef1.css.map": "/training-shop/static/css/main.8bf81ef1.css.map",
-    "main.f4469244.js.map": "/training-shop/static/js/main.f4469244.js.map",
+    "main.d0cc860e.css.map": "/training-shop/static/css/main.d0cc860e.css.map",
+    "main.acfcb25e.js.map": "/training-shop/static/js/main.acfcb25e.js.map",
     "787.47ca6e30.chunk.js.map": "/training-shop/static/js/787.47ca6e30.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8bf81ef1.css",
-    "static/js/main.f4469244.js"
+    "static/css/main.d0cc860e.css",
+    "static/js/main.acfcb25e.js"
   ]
 }
