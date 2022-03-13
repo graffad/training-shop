@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import StarsRate from "./StarsRate";
 import Slider from "../slider/Slider";
-import { sliderProduct, clothes } from "../constants/constants";
-import SliderRelatedProducts from "../slider/SliderRelatedProducts";
+import UserService from "../../services/userService";
+import { reduxSetCart } from "../../redux/reducers/cartSlice";
 
 // icons
-import { ReactComponent as Arrow } from "../../images/arr-left.svg";
 import { ReactComponent as Hook } from "./icons/hook.svg";
 import { ReactComponent as Hart } from "./icons/hart.svg";
 import { ReactComponent as Compare } from "./icons/compare.svg";
@@ -22,15 +22,29 @@ import discover from "../../images/credit-cards/discover_x42.png";
 import american from "../../images/credit-cards/american-express_x42.png";
 
 export default function ProductProfile({ params, productData }) {
+  const dispatch = useDispatch();
+  const cartProducts = useSelector((state) => state.cart.products);
   const uniqueColorObj = [
     ...new Map(productData.images.map((img) => [img.color, img])).values(),
   ];
-  console.log([...new Set(productData.sizes.map((n) => n))]);
+  // console.log([...new Set(productData.sizes.map((n) => n))]);
   // ▼ will update to react-hook-form
   const [productColor, setProductColor] = useState(
     productData?.images[0]?.color
   );
   const [productSize, setProductSize] = useState(productData.sizes[0]);
+  const [imgForCart, setImgForCart] = useState(productData?.images[0]?.url);
+
+  function compareProdCart() {
+    return cartProducts.find(
+      (item) => item.myId === `${productData.id}-${productColor}-${productSize}`
+    );
+  }
+ useEffect(()=>{
+   setProductColor(productData?.images[0]?.color)
+   setProductSize(productData.sizes[0])
+   setImgForCart(productData?.images[0]?.url)
+ },[productData])
 
   return (
     <section className="product-profile-outer">
@@ -59,6 +73,7 @@ export default function ProductProfile({ params, productData }) {
                       defaultChecked={index === 0}
                       onChange={(event) => {
                         setProductColor(event.target.value);
+                        setImgForCart(item.url);
                       }}
                     />
                     <label htmlFor={item.id}>
@@ -100,12 +115,42 @@ export default function ProductProfile({ params, productData }) {
               <div className="product-profile-controls__item product-profile-controls__price">
                 $ {productData.price.toFixed(2)}
               </div>
-              <button
-                type="button"
-                className="product-profile-controls__item product-profile-controls__cart"
-              >
-                ADD TO CART
-              </button>
+
+              {compareProdCart() ? (
+                <button
+                  type="button"
+                  className="product-profile-controls__item product-profile-controls__cart"
+                  onClick={() => {
+                    UserService.removeFromCart(compareProdCart());
+                    dispatch(
+                      reduxSetCart(JSON.parse(localStorage.getItem("cart")))
+                    );
+                  }}
+                >
+                  REMOVE FROM CART
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="product-profile-controls__item product-profile-controls__cart"
+                  data-test-id="add-cart-button"
+                  onClick={() => {
+                    UserService.addToCart({
+                      ...productData,
+                      color: productColor,
+                      size: productSize,
+                      image: imgForCart,
+                      myId: `${productData.id}-${productColor}-${productSize}`,
+                    });
+                    dispatch(
+                      reduxSetCart(JSON.parse(localStorage.getItem("cart")))
+                    );
+                  }}
+                >
+                  ADD TO CART
+                </button>
+              )}
+
               <button
                 type="button"
                 className="product-profile-controls__item product-profile-controls__like"

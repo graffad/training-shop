@@ -1,5 +1,7 @@
-import { Link, NavLink,useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import {useSelector} from "react-redux";
+// icons
 import { ReactComponent as Phone } from "./icons/phone.svg";
 import { ReactComponent as Map } from "./icons/map.svg";
 import { ReactComponent as Time } from "./icons/time.svg";
@@ -12,12 +14,15 @@ import { ReactComponent as GlobusSvg } from "./icons/globus.svg";
 import { ReactComponent as ProfileSvg } from "./icons/profile.svg";
 import { ReactComponent as CartSvg } from "./icons/cart.svg";
 import { headerNav } from "../constants/constants";
+import Cart from "../cart/Cart";
 
 export default function Header() {
-  const location = useLocation()
+  const cartCounter = useSelector(state => state.cart.cartSum.num)
+  const location = useLocation();
   const [burgerIsActive, setBurgerIsActive] = useState(false);
   const headerRef = useRef(null);
   const [burgerMargin, setBurgerMargin] = useState(90);
+  const [isShowCart, setIsShowCart] = useState(false);
 
   // if too many links and overflow
   function onResize() {
@@ -28,6 +33,12 @@ export default function Header() {
     if (!el.className.split(" ").some((cl) => /burger*/.test(cl))) {
       setBurgerIsActive(false);
       document.body.classList.remove("fixed-body");
+    }
+    if (
+      el.classList.contains("cart--active") ||
+      el.classList.contains("close-cart")
+    ) {
+      setIsShowCart(false);
     }
   }
   useEffect(() => {
@@ -42,8 +53,6 @@ export default function Header() {
       document.removeEventListener("click", onClickOver);
     };
   }, [location]);
-
-
 
   return (
     <>
@@ -98,10 +107,15 @@ export default function Header() {
               <SearchSvg className="header-controls__item" />
               <GlobusSvg className="header-controls__item" />
               <ProfileSvg className="header-controls__item" />
-              <div className="header-controls__item">
+              <button
+                type="button"
+                onClick={() => setIsShowCart(!isShowCart)}
+                className="header-controls__item"
+                data-test-id="cart-button"
+              >
                 <CartSvg />
-                <div className="header-cart-counter">2</div>
-              </div>
+                <div className="header-cart-counter">{cartCounter}</div>
+              </button>
               <button
                 onClick={() => {
                   setBurgerIsActive(!burgerIsActive);
@@ -145,6 +159,8 @@ export default function Header() {
           ))}
         </div>
       </div>
+
+      <Cart isShowCart={isShowCart} />
     </>
   );
 }
