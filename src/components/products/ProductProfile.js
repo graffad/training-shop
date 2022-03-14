@@ -120,6 +120,7 @@ export default function ProductProfile({ params, productData }) {
                 <button
                   type="button"
                   className="product-profile-controls__item product-profile-controls__cart"
+                  data-test-id="add-cart-button"
                   onClick={() => {
                     UserService.removeFromCart(compareProdCart());
                     dispatch(
