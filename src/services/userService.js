@@ -1,4 +1,4 @@
-// const cart = JSON.parse(localStorage.getItem("cart"));
+import axios from "axios";
 
 class UserService {
   constructor() {
@@ -14,7 +14,7 @@ class UserService {
       color: data.color,
       size: data.size,
       quantity: 1,
-      myId: data.myId
+      myId: data.myId,
     };
     let cart = [];
     if (this.cart() === null) {
@@ -31,7 +31,10 @@ class UserService {
     }
 
     // const cart = JSON.parse(localStorage.getItem("cart"));
-    return localStorage.setItem("cart", JSON.stringify([...this.cart(), product]));
+    return localStorage.setItem(
+      "cart",
+      JSON.stringify([...this.cart(), product])
+    );
   }
 
   removeFromCart(data) {
@@ -40,7 +43,7 @@ class UserService {
   }
 
   cartProductMinus(data) {
-    const cart = [...this.cart()]
+    const cart = [...this.cart()];
     for (let i = 0; i < cart.length; i += 1) {
       if (cart[i].myId === data.myId) {
         if (cart[i].quantity > 1) {
@@ -52,15 +55,38 @@ class UserService {
   }
 
   cartProductPlus(data) {
-    const cart = [...this.cart()]
+    const cart = [...this.cart()];
     for (let i = 0; i < cart.length; i += 1) {
       if (cart[i].myId === data.myId) {
-        cart[i].quantity +=1;
+        cart[i].quantity += 1;
       }
     }
     return localStorage.setItem("cart", JSON.stringify(cart));
   }
 
+  async getProductsAll() {
+    const res = await axios.get("https://training.cleverland.by/shop/products");
+    return res;
+  }
+
+  async getProductsDiff(data) {
+    const res = await axios.post(
+      "https://training.cleverland.by/shop/products/search",
+      {
+        category: data,
+        // brands: ["Winzor", "Mango"],
+        // sizes: ["S INT", "XS INT", "L INT"]
+        // prices: ["middle"]
+        // colors: ["Multicolor"]
+      }
+    );
+    return res;
+  }
+
+  async getProduct(id){
+    const res = await axios.get(`https://training.cleverland.by/shop/product/${id}`);
+    return res;
+  }
 }
 
 export default new UserService();

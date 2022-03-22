@@ -1,5 +1,4 @@
 import bannerImg from "../promo/images/banner.jpg";
-import PRODUCTS from "./productsData";
 
 const headerNav = [
   { id: 1, path: "about", name: "About Us" },
@@ -55,23 +54,7 @@ const sliderPromo = [
     banner: { header: "recruiters", text: "a job offer" },
   },
 ];
-const sliderProduct = [
-  { id: 1, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
-  { id: 2, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
-  { id: 3, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
-  { id: 4, img: `${process.env.PUBLIC_URL}/./tmp/w1.jpg` },
-];
 
-const clothes = (productType) => {
-  switch (productType) {
-    case "women":
-      return PRODUCTS.women;
-    case "men":
-      return PRODUCTS.men;
-    default:
-      return [];
-  }
-};
 
 export {
   headerNav,
@@ -79,7 +62,5 @@ export {
   footerNavInfo,
   footerNavUseful,
   sliderPromo,
-  sliderProduct,
-  clothes,
   PROMO_FILTERS,
 };

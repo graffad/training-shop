@@ -1,7 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 import { Link } from "react-router-dom";
+import {useDispatch} from "react-redux";
 import StarsRate from "../products/StarsRate";
+import {reduxSetProductProfile} from "../../redux/reducers/productsSlice";
 
 SwiperCore.use([Navigation]);
 
@@ -9,7 +11,9 @@ export default function SliderRelatedProducts({
   slides = [],
   productType = "",
 }) {
-  // problems with img fit with max-hw
+
+const dispatch = useDispatch()
+
   return (
     <Swiper
       // slidesPerView="auto"
@@ -42,6 +46,7 @@ export default function SliderRelatedProducts({
             key={item.id}
             className="products-inner-card"
             data-test-id={`clothes-card-${productType}`}
+            onClick={()=> dispatch(reduxSetProductProfile(item))}
           >
             {item.discount ? (
               <div className="products-inner-card__discount">

@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { clothes } from "../constants/constants";
+import { useDispatch, useSelector } from "react-redux";
 import ProductsFilters from "./ProductsFilters";
 import Pagination from "../Pagination";
 import StarsRate from "./StarsRate";
+import { reduxSetProductProfile } from "../../redux/reducers/productsSlice";
 
 export default function Products({
   productType,
@@ -12,14 +13,19 @@ export default function Products({
   limit = undefined,
   filterPromo = null,
 }) {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const products = useSelector(
+    (state) => state.productsState.products[`${productType}`]
+  );
+
+  // filters states
   const [filteredProducts, setFilteredProducts] = useState([]);
   const allSizesUniq = [
-    ...new Set([...new Set(products.map((p) => p.sizes))].flat()),
+    ...new Set([...new Set(products?.map((p) => p.sizes))].flat()),
   ];
-  const allColors = [...new Set(products.map((p) => p.images))].flat();
-  const allColorsUniq = [...new Set(allColors.map((c) => c.color))];
-  const allBrandsUniq = [...new Set(products.map((p) => p.brand))];
+  const allColors = [...new Set(products?.map((p) => p.images))].flat();
+  const allColorsUniq = [...new Set(allColors?.map((c) => c.color))];
+  const allBrandsUniq = [...new Set(products?.map((p) => p.brand))];
 
   const FILTERS = {
     colors: allColorsUniq,
@@ -43,7 +49,7 @@ export default function Products({
   });
 
   function filterByParticulars(prod) {
-    return prod.filter((item) => item.particulars[filterPromo]);
+    return prod?.filter((item) => item.particulars[filterPromo]);
   }
   useEffect(() => {
     // re init selected filters if change type
@@ -54,24 +60,20 @@ export default function Products({
       price: [],
     });
     if (filterPromo !== null) {
-      setProducts(filterByParticulars(clothes(productType)).slice(0, limit));
-      setFilteredProducts(
-        filterByParticulars(clothes(productType)).slice(0, limit)
-      );
+      setFilteredProducts(filterByParticulars(products)?.slice(0, limit));
     } else {
-      setProducts(clothes(productType).slice(0, limit));
-      setFilteredProducts(clothes(productType).slice(0, limit));
+      setFilteredProducts(products?.slice(0, limit));
     }
-  }, [filterPromo, productType]);
+  }, [filterPromo, productType, products]);
 
   useEffect(() => {
     // init array and if no filters enabled + avoid promo
     if (filterPromo === null) {
-      setFilteredProducts(clothes(productType).slice(0, limit));
+      setFilteredProducts(products?.slice(0, limit));
     }
 
     // filter by many conditions + check length for fix global cond &&
-    const newProd = products.filter(
+    const newProd = products?.filter(
       (prod) =>
         // for filter By Color
         (selectedFilters.colors.length > 0
@@ -104,7 +106,7 @@ export default function Products({
         setFilteredProducts(newProd);
       }
     }
-  }, [selectedFilters]);
+  }, [selectedFilters, products]);
   return (
     <section className="products-outer" data-test-id={`clothes-${productType}`}>
       <div className="container">
@@ -113,19 +115,20 @@ export default function Products({
             FILTERS={FILTERS}
             selectedFilters={selectedFilters}
             setSelectedFilters={setSelectedFilters}
-            itemsFound={filteredProducts.length}
+            itemsFound={filteredProducts?.length}
             productType={productType}
           />
         ) : (
           ""
         )}
         <div className="products-inner">
-          {filteredProducts.map((item, index) => (
+          {filteredProducts?.map((item, index) => (
             <Link
               to={`/${productType}/${item.id}`}
               key={item.id}
               className="products-inner-card"
               data-test-id={`clothes-card-${productType}`}
+              onClick={() => dispatch(reduxSetProductProfile(item))}
             >
               {item.discount ? (
                 <div className="products-inner-card__discount">

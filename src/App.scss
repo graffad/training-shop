@@ -2,7 +2,7 @@
 @import "~swiper/components/navigation/navigation";
 @import "~swiper/components/pagination/pagination";
 @import "~swiper/components/thumbs/thumbs";
-
+@import "components/loader/loader";
 // vars
 $gray: #e6e6e6;
 $grayLight: #f8f8f8;
@@ -37,6 +37,27 @@ $grayDark: #9c9c9c;
 svg {
   pointer-events: none;
 }
+
+.alert{
+  top:0;
+  position: fixed;
+  padding: 10px 0;
+  background: #e91e63;
+  width: 100%;
+  z-index: 9;
+  &-text{
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &-close-btn{
+    padding: 5px 10px;
+    font-size: 20px;
+  }
+}
+
 // </>common
 
 // =====HEADER=====
