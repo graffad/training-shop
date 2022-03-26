@@ -1,6 +1,6 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 // icons
 import { ReactComponent as Phone } from "./icons/phone.svg";
 import { ReactComponent as Map } from "./icons/map.svg";
@@ -17,7 +17,7 @@ import { headerNav } from "../constants/constants";
 import Cart from "../cart/Cart";
 
 export default function Header() {
-  const cartCounter = useSelector(state => state.cart.cartSum.num)
+  const cartCounter = useSelector((state) => state.cart.cartSum.num);
   const location = useLocation();
   const [burgerIsActive, setBurgerIsActive] = useState(false);
   const headerRef = useRef(null);
@@ -32,7 +32,7 @@ export default function Header() {
   function onClickOver(el) {
     if (!el.className.split(" ").some((cl) => /burger*/.test(cl))) {
       setBurgerIsActive(false);
-      document.body.classList.remove("fixed-body");
+      // document.body.classList.remove("fixed-body");
     }
     if (
       el.classList.contains("cart--active") ||
@@ -42,7 +42,7 @@ export default function Header() {
     }
   }
   useEffect(() => {
-    document.body.classList.remove("fixed-body");
+    // document.body.classList.remove("fixed-body");
     window.addEventListener("resize", onResize);
     document.addEventListener("click", (event) => {
       onClickOver(event.target);
@@ -53,6 +53,13 @@ export default function Header() {
       document.removeEventListener("click", onClickOver);
     };
   }, [location]);
+
+  useEffect(() => {
+    document.body.classList.remove("fixed-body");
+    if (burgerIsActive) {
+      document.body.classList.add("fixed-body");
+    }
+  }, [burgerIsActive]);
 
   return (
     <>
@@ -119,7 +126,7 @@ export default function Header() {
               <button
                 onClick={() => {
                   setBurgerIsActive(!burgerIsActive);
-                  document.body.classList.toggle("fixed-body");
+                  // document.body.classList.toggle("fixed-body");
                 }}
                 type="button"
                 data-test-id="burger-menu-btn"

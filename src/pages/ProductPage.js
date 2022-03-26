@@ -12,6 +12,7 @@ import {
 } from "../redux/reducers/productsSlice";
 import Loader from "../components/loader/Loader";
 import Alert from "../components/Alert";
+import ModalReview from "../components/modals/ModalReview";
 
 export default function ProductPage() {
   const dispatch = useDispatch();
@@ -25,9 +26,9 @@ export default function ProductPage() {
     if (!productData || productData.id !== params.id) {
       dispatch(reduxGetProductProfile(params.id));
     }
-    if (products[`${params.category}`].length === 0) {
+    // if (products[`${params.category}`].length === 0) {
       dispatch(reduxGetProductsDiff(params.category));
-    }
+    // }
   }, [params]);
 
   return (
@@ -81,6 +82,7 @@ export default function ProductPage() {
           <Loader />
         )}
       </div>
+      <ModalReview/>
     </Layout>
   );
 }

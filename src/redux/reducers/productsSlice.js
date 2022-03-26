@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  products: { man: [], women: [] },
+  products: { men: [], women: [] },
   productData: {},
   isLoading: true,
   isLoadingProfile: true,

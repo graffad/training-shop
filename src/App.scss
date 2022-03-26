@@ -7,13 +7,29 @@
 $gray: #e6e6e6;
 $grayLight: #f8f8f8;
 $grayDark: #9c9c9c;
-
+@import "components/modals/modals";
 // mixins
 @mixin limitMaxRows($rows: 4) {
   display: -webkit-box;
   -webkit-line-clamp: $rows;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+@mixin scrollBar($widthOrHeight : "width", $size:3px){
+  &::-webkit-scrollbar {
+    @if $widthOrHeight == "width"{
+      width: $size;
+    }
+    @else if($widthOrHeight == "height"){
+      height: $size;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: $gray;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #8d8b8b;
+  }
 }
 
 // common
@@ -864,15 +880,7 @@ svg {
   overflow: hidden;
   transition: 0.2s;
   overflow-x: auto;
-  &::-webkit-scrollbar {
-    height: 3px;
-  }
-  &::-webkit-scrollbar-track {
-    background: $gray;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #8d8b8b;
-  }
+  @include scrollBar("height")
 }
 .products-filters-wrapper--active {
   max-height: 350px;
@@ -902,15 +910,7 @@ svg {
       margin-left: 8px;
     }
   }
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
-  &::-webkit-scrollbar-track {
-    background: $gray;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #8d8b8b;
-  }
+  @include scrollBar("width")
 }
 
 .products-filters-description {
@@ -1202,7 +1202,13 @@ svg {
       margin-left: 9px;
     }
   }
+  &__content{
+    max-height: 800px;
+    overflow-y: auto;
+    @include scrollBar("width");
+  }
 }
+
 .product-profile-review {
   font-size: 14px;
   &:not(:first-child) {
@@ -1218,6 +1224,9 @@ svg {
   &__text {
     opacity: 0.8;
     font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
   }
 }
 //========slider-related======================

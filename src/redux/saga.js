@@ -50,7 +50,6 @@ function* sagaWorkerProductProfile({ payload }) {
 function* sagaWorkerSubscribe({ payload }) {
   try {
     const res = yield call(() => UserService.createSubscribe(payload));
-    console.log(res);
     if (res.status === 200) {
       yield put(reduxSetSubscribeSuccess("почта успешно отправлена"));
     }

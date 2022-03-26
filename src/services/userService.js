@@ -93,6 +93,11 @@ class UserService {
     return res
   }
 
+  async createReview(obj){
+    const res = await axios.post("https://training.cleverland.by/shop/product/review",{...obj})
+    return res
+  }
+
 
 }
 

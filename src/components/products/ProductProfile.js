@@ -4,6 +4,7 @@ import StarsRate from "./StarsRate";
 import Slider from "../slider/Slider";
 import UserService from "../../services/userService";
 import { reduxSetCart } from "../../redux/reducers/cartSlice";
+import {reduxShowModalReview} from "../../redux/reducers/reviewSlice";
 
 // icons
 import { ReactComponent as Hook } from "./icons/hook.svg";
@@ -38,14 +39,14 @@ export default function ProductProfile({ params, productData = {} }) {
       (item) => item.myId === `${productData.id}-${productColor}-${productSize}`
     );
   }
-   useEffect(() => {
-     // or check obj keys if empty
+  useEffect(() => {
+    // or check obj keys if empty
     if (productData.id !== undefined) {
       setProductColor(productData.images[0].color);
       setProductSize(productData.sizes[0]);
       setImgForCart(productData.images[0].url);
     }
-   }, [productData]);
+  }, [productData]);
 
   return (
     <section className="product-profile-outer">
@@ -237,6 +238,7 @@ export default function ProductProfile({ params, productData = {} }) {
                   <button
                     type="button"
                     className="product-profile-reviews__rate-button"
+                    onClick={()=>dispatch(reduxShowModalReview())}
                   >
                     <Cloud />
                     <span>Write a review</span>
