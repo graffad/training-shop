@@ -26,6 +26,18 @@
     animation: ring 1s linear infinite;
   }
 }
+
+
+.loader-small{
+  width: 20px;
+  height: 20px;
+  border: 3px solid white;
+  margin-left: 5px;
+  border-radius: 50%;
+  border-left: 3px solid black;
+  animation: ring-small 1s linear infinite;
+}
+
 @keyframes ring {
   0%{
     transform: rotate(0deg);
@@ -38,5 +50,11 @@
   100%{
     transform: rotate(360deg);
     box-shadow: 1px 5px 20px #e91e63;
+  }
+}
+
+@keyframes ring-small {
+  100%{
+    transform: rotate(360deg);
   }
 }

@@ -87,6 +87,13 @@ class UserService {
     const res = await axios.get(`https://training.cleverland.by/shop/product/${id}`);
     return res;
   }
+
+  async createSubscribe(mailObj){
+    const res = await axios.post("https://training.cleverland.by/shop/email",{mailObj})
+    return res
+  }
+
+
 }
 
 export default new UserService();

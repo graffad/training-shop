@@ -10,6 +10,13 @@ import {
   reduxSetProductsProfileError,
 } from "./reducers/productsSlice";
 
+// split sagas on files?
+import {
+  reduxGetSubscribe,
+  reduxSetSubscribeSuccess,
+  reduxSetSubscribeError,
+} from "./reducers/subscribeSlice";
+
 function* sagaWorkerProductsAll() {
   try {
     const res = yield call(UserService.getProductsAll);
@@ -39,8 +46,22 @@ function* sagaWorkerProductProfile({ payload }) {
   }
 }
 
+// for email subscribe
+function* sagaWorkerSubscribe({ payload }) {
+  try {
+    const res = yield call(() => UserService.createSubscribe(payload));
+    console.log(res);
+    if (res.status === 200) {
+      yield put(reduxSetSubscribeSuccess("почта успешно отправлена"));
+    }
+  } catch (e) {
+    yield put(reduxSetSubscribeError("ошибка загрузки продукта"));
+  }
+}
+
 export default function* sagaWatcher() {
   yield takeEvery(reduxGetProductsAll, sagaWorkerProductsAll);
   yield takeEvery(reduxGetProductsDiff, sagaWorkerProductsDiff);
   yield takeEvery(reduxGetProductProfile, sagaWorkerProductProfile);
+  yield takeEvery(reduxGetSubscribe, sagaWorkerSubscribe);
 }

@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Phone } from "./icons/phone.svg";
 import { ReactComponent as Map } from "./icons/map.svg";
 import { ReactComponent as Time } from "./icons/time.svg";
@@ -19,22 +23,73 @@ import {
   footerNavInfo,
   footerNavCategories,
 } from "../constants/constants";
+import { schemaSubscribe } from "../../services/validationSchemas";
+import {reduxGetSubscribe, reduxHideSubscribeSuccess} from "../../redux/reducers/subscribeSlice";
 
 export default function Footer(props) {
+  const dispatch = useDispatch();
+  const { isLoadingSubscribe, isErrorSubscribe, isSuccessSubscribe } =
+    useSelector((state) => state.subscribeState);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: { mail: "" },
+    resolver: yupResolver(schemaSubscribe),
+  });
+  function onSubmitSubscribe(data) {
+    dispatch(reduxGetSubscribe(data));
+  }
+  useEffect(() => {
+    reset();
+    if (isSuccessSubscribe) {
+      setTimeout(() => {
+        dispatch(reduxHideSubscribeSuccess());
+      }, 2000);
+    }
+  }, [isSuccessSubscribe]);
   return (
     <footer className="footer" data-test-id="footer">
       <section className="footer-intouch-outer">
         <div className="container">
           <div className="footer-intouch-inner">
             <p className="footer-intouch-text">BE IN TOUCH WITH US:</p>
-            <form action="#" className="footer-intouch-form">
-              <input
-                type="text"
-                className="footer-intouch-form__input"
-                placeholder="Enter your email"
-              />
-              <button type="submit" className="footer-intouch-form__button">
-                JOIN US
+            <form
+              action="#"
+              className="footer-intouch-form"
+              onSubmit={handleSubmit(onSubmitSubscribe)}
+            >
+              <div style={{ width: "100%" }}>
+                <input
+                  {...register("mail")}
+                  type="text"
+                  className="footer-intouch-form__input"
+                  placeholder="Enter your email"
+                />
+                {errors.mail && (
+                  <p className="promo-subscribe-form__message promo-subscribe-form__message--error">
+                    {errors?.mail?.message}
+                  </p>
+                )}
+                {isErrorSubscribe ? (
+                  <p className="promo-subscribe-form__message promo-subscribe-form__message--error">
+                    {isErrorSubscribe}
+                  </p>
+                ) : (
+                  <p className="promo-subscribe-form__message promo-subscribe-form__message--success">
+                    {isSuccessSubscribe}
+                  </p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="footer-intouch-form__button"
+                disabled={isLoadingSubscribe}
+              >
+                JOIN US {isLoadingSubscribe && <div className="loader-small" />}
               </button>
             </form>
             <div className="footer-intouch-social social-icons">

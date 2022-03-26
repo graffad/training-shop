@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import cartSlice from "./reducers/cartSlice";
 import productsSlice from "./reducers/productsSlice";
+import subscribeSlice from "./reducers/subscribeSlice";
 import sagaWatcher from "./saga";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -9,6 +10,7 @@ const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineReducers({
   cart: cartSlice,
   productsState: productsSlice,
+  subscribeState: subscribeSlice
 });
 
 const store = configureStore({

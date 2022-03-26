@@ -38,21 +38,21 @@ svg {
   pointer-events: none;
 }
 
-.alert{
-  top:0;
+.alert {
+  top: 0;
   position: fixed;
   padding: 10px 0;
   background: #e91e63;
   width: 100%;
   z-index: 9;
-  &-text{
+  &-text {
     font-size: 20px;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  &-close-btn{
+  &-close-btn {
     padding: 5px 10px;
     font-size: 20px;
   }
@@ -426,7 +426,7 @@ svg {
   margin-top: 12px;
 }
 
-.cart-empty-text{
+.cart-empty-text {
   font-weight: 600;
   font-size: 26px;
   text-align: center;
@@ -434,7 +434,7 @@ svg {
   margin: 60px auto;
   line-height: 150%;
 }
-.cart-btn-back{
+.cart-btn-back {
   @extend .cart-form-submit-btn;
   margin-top: auto;
 }
@@ -1379,6 +1379,23 @@ svg {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:disabled {
+      background: $gray;
+    }
+  }
+  &__message {
+    font-size: 12px;
+    text-transform: lowercase;
+    margin-top: 3px;
+    &--error {
+      color: #e91e63;
+    }
+    &--success {
+      color: darkolivegreen;
+    }
   }
 
   &__img1 {
@@ -1589,13 +1606,22 @@ svg {
     padding: 7px 24px;
     flex-shrink: 0;
     margin-left: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
       cursor: pointer;
+    }
+    &:disabled {
+      background: $gray;
     }
   }
 }
 .footer-intouch-social {
   margin-left: auto;
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 }
 
 .footer-content {
