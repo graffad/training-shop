@@ -61,6 +61,7 @@ export default function PromoSubscribe() {
               className="promo-subscribe-form__input"
               type="email"
               placeholder="Enter your email"
+              data-test-id="main-subscribe-mail-field"
             />
             {errors.mail && (
               <p className="promo-subscribe-form__message promo-subscribe-form__message--error">
@@ -83,6 +84,7 @@ export default function PromoSubscribe() {
               className="promo-subscribe-form__button"
               type="submit"
               disabled={isLoadingSubscribe === 1}
+              data-test-id="main-subscribe-mail-button"
             >
               Subscribe{" "}
               {isLoadingSubscribe === 1 && <div className="loader-small" />}

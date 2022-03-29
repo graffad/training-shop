@@ -75,6 +75,7 @@ export default function Footer(props) {
                   type="text"
                   className="footer-intouch-form__input"
                   placeholder="Enter your email"
+                  data-test-id="footer-mail-field"
                 />
                 {errors.mail && (
                   <p className="promo-subscribe-form__message promo-subscribe-form__message--error">
@@ -97,6 +98,7 @@ export default function Footer(props) {
                 type="submit"
                 className="footer-intouch-form__button"
                 disabled={isLoadingSubscribe === 2}
+                data-test-id="footer-subscribe-mail-button"
               >
                 JOIN US{" "}
                 {isLoadingSubscribe === 2 && <div className="loader-small" />}

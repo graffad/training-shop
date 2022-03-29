@@ -58,7 +58,7 @@ export default function ModalReview() {
   }
   return (
     <div className="modal-reviews-wrapper">
-      <div className="modal-reviews-inner">
+      <div className="modal-reviews-inner" data-test-id="review-modal">
         <button
           type="button"
           className="modal-reviews-btn-close"
@@ -100,6 +100,7 @@ export default function ModalReview() {
             placeholder="Введите имя"
             className="modal-reviews-form__input"
             {...register("name")}
+            data-test-id="review-name-field"
           />
           {errors.name && (
             <p className="modal-reviews-form__error">{errors?.name?.message}</p>
@@ -111,6 +112,7 @@ export default function ModalReview() {
             className="modal-reviews-form__textarea"
             placeholder="Введите текст"
             {...register("text")}
+            data-test-id="review-text-field"
           />
           {errors.text && (
             <p className="modal-reviews-form__error">{errors?.text?.message}</p>
@@ -127,6 +129,7 @@ export default function ModalReview() {
             type="submit"
             className="modal-reviews-form__button"
             disabled={isLoadingReviewReq}
+            data-test-id="review-submit-button"
           >
             Submit {isLoadingReviewReq && <div className="loader-small" />}
           </button>

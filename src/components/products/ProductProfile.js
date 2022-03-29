@@ -239,6 +239,7 @@ export default function ProductProfile({ params, productData = {} }) {
                     type="button"
                     className="product-profile-reviews__rate-button"
                     onClick={()=>dispatch(reduxShowModalReview())}
+                    data-test-id="review-button"
                   >
                     <Cloud />
                     <span>Write a review</span>
