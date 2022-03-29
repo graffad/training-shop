@@ -18,7 +18,7 @@ const subscribeSlice = createSlice({
       state.isErrorSubscribe = false;
       state.errorMessage = false;
       state.isSuccessSubscribe = false;
-      // for diff form input
+      // for diff form input or can be removed by formState
       state.isLoadingSubscribe = action.payload.id
     },
     reduxSetSubscribeSuccess(state, action) {

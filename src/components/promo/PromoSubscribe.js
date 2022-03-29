@@ -22,11 +22,12 @@ export default function PromoSubscribe() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid }, // isSubmitting ???
     reset,
   } = useForm({
     defaultValues: { mail: "" },
     resolver: yupResolver(schemaSubscribe),
+    mode: "onChange",
   });
 
   function onSubmitSubscribe(data) {
@@ -83,7 +84,7 @@ export default function PromoSubscribe() {
             <button
               className="promo-subscribe-form__button"
               type="submit"
-              disabled={isLoadingSubscribe === 1}
+              disabled={isLoadingSubscribe === 1 || !isDirty || !isValid}
               data-test-id="main-subscribe-mail-button"
             >
               Subscribe{" "}

@@ -41,11 +41,12 @@ export default function Footer(props) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid }, // isSubmitting ???,
     reset,
   } = useForm({
     defaultValues: { mail: "" },
     resolver: yupResolver(schemaSubscribe),
+    mode: "onChange",
   });
   function onSubmitSubscribe(data) {
     dispatch(reduxGetSubscribe({ dataMail: { ...data }, id: 2 }));
@@ -97,7 +98,7 @@ export default function Footer(props) {
               <button
                 type="submit"
                 className="footer-intouch-form__button"
-                disabled={isLoadingSubscribe === 2}
+                disabled={isLoadingSubscribe === 2 || !isDirty || !isValid}
                 data-test-id="footer-subscribe-mail-button"
               >
                 JOIN US{" "}

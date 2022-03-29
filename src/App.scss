@@ -1391,9 +1391,9 @@ svg {
     display: flex;
     justify-content: center;
     align-items: center;
-    &:disabled {
-      background: $gray;
-    }
+    //&:disabled {
+    //  background: $gray;
+    //}
   }
   &__message {
     font-size: 12px;
@@ -1621,9 +1621,9 @@ svg {
     &:hover {
       cursor: pointer;
     }
-    &:disabled {
-      background: $gray;
-    }
+    //&:disabled {
+    //  background: $gray;
+    //}
   }
 }
 .footer-intouch-social {

@@ -21,11 +21,12 @@ export default function ModalReview() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty, isValid }, // isSubmitting ???,
     reset,
   } = useForm({
     defaultValues: { rating: 1, id: "", name: "", text: "" },
     resolver: yupResolver(schemaReview),
+    mode: "onChange",
   });
 
   function hideModalOnClickOver(event) {
@@ -128,7 +129,7 @@ export default function ModalReview() {
           <button
             type="submit"
             className="modal-reviews-form__button"
-            disabled={isLoadingReviewReq}
+            disabled={isLoadingReviewReq || !isDirty}
             data-test-id="review-submit-button"
           >
             Submit {isLoadingReviewReq && <div className="loader-small" />}
