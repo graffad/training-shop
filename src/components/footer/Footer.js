@@ -24,12 +24,20 @@ import {
   footerNavCategories,
 } from "../constants/constants";
 import { schemaSubscribe } from "../../services/validationSchemas";
-import {reduxGetSubscribe, reduxHideSubscribeSuccess} from "../../redux/reducers/subscribeSlice";
+import {
+  reduxGetSubscribe,
+  reduxHideSubscribeSuccess,
+} from "../../redux/reducers/subscribeSlice";
 
 export default function Footer(props) {
   const dispatch = useDispatch();
-  const { isLoadingSubscribe, isErrorSubscribe, isSuccessSubscribe } =
-    useSelector((state) => state.subscribeState);
+  const {
+    isLoadingSubscribe,
+    isErrorSubscribe,
+    isSuccessSubscribe,
+    errorMessage,
+    successMessage,
+  } = useSelector((state) => state.subscribeState);
   const {
     register,
     handleSubmit,
@@ -40,7 +48,7 @@ export default function Footer(props) {
     resolver: yupResolver(schemaSubscribe),
   });
   function onSubmitSubscribe(data) {
-    dispatch(reduxGetSubscribe(data));
+    dispatch(reduxGetSubscribe({ dataMail: { ...data }, id: 2 }));
   }
   useEffect(() => {
     reset();
@@ -73,13 +81,14 @@ export default function Footer(props) {
                     {errors?.mail?.message}
                   </p>
                 )}
-                {isErrorSubscribe ? (
-                  <p className="promo-subscribe-form__message promo-subscribe-form__message--error">
-                    {isErrorSubscribe}
-                  </p>
-                ) : (
+                {isSuccessSubscribe === 2 && (
                   <p className="promo-subscribe-form__message promo-subscribe-form__message--success">
-                    {isSuccessSubscribe}
+                    {successMessage}
+                  </p>
+                )}
+                {isErrorSubscribe === 2 && (
+                  <p className="promo-subscribe-form__message promo-subscribe-form__message--error">
+                    {errorMessage}
                   </p>
                 )}
               </div>
@@ -87,9 +96,10 @@ export default function Footer(props) {
               <button
                 type="submit"
                 className="footer-intouch-form__button"
-                disabled={isLoadingSubscribe}
+                disabled={isLoadingSubscribe === 2}
               >
-                JOIN US {isLoadingSubscribe && <div className="loader-small" />}
+                JOIN US{" "}
+                {isLoadingSubscribe === 2 && <div className="loader-small" />}
               </button>
             </form>
             <div className="footer-intouch-social social-icons">

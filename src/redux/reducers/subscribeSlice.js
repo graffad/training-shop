@@ -4,6 +4,8 @@ const initialState = {
   isLoadingSubscribe: false,
   isErrorSubscribe: false,
   isSuccessSubscribe: false,
+  errorMessage:false,
+  successMessage:"почта успешно отправлена"
 };
 
 const subscribeSlice = createSlice({
@@ -12,18 +14,22 @@ const subscribeSlice = createSlice({
   reducers: {
     // actions
     reduxGetSubscribe(state, action) {
+      // console.log(action.payload)
       state.isErrorSubscribe = false;
+      state.errorMessage = false;
       state.isSuccessSubscribe = false;
-      state.isLoadingSubscribe = true;
+      // for diff form input
+      state.isLoadingSubscribe = action.payload.id
     },
     reduxSetSubscribeSuccess(state, action) {
       state.isLoadingSubscribe = false;
-      state.isSuccessSubscribe = action.payload;
+      state.isSuccessSubscribe = action.payload.id;
     },
     reduxSetSubscribeError(state, action) {
       state.isLoadingSubscribe = false;
       state.isSuccessSubscribe = false;
-      state.isErrorSubscribe = action.payload;
+      state.isErrorSubscribe = action.payload.id;
+      state.errorMessage = action.payload.errorMessage
     },
     reduxHideSubscribeSuccess(state) {
       state.isSuccessSubscribe = false;

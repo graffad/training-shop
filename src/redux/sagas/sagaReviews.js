@@ -1,13 +1,13 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import UserService from "../services/userService";
+import UserService from "../../services/userService";
 import {
   reduxCreateReviewReq,
   reduxCreateReviewReqError,
   reduxCreateReviewReqSuccess,
   reduxHideModalReview,
   reduxShowModalReview,
-} from "./reducers/reviewSlice";
-import {reduxGetProductProfile} from "./reducers/productsSlice";
+} from "../reducers/reviewSlice";
+import {reduxGetProductProfile} from "../reducers/productsSlice";
 
 
 function* sagaWorkerReview({ payload }) {

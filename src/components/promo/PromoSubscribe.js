@@ -12,8 +12,13 @@ import {
 
 export default function PromoSubscribe() {
   const dispatch = useDispatch();
-  const { isLoadingSubscribe, isErrorSubscribe, isSuccessSubscribe } =
-    useSelector((state) => state.subscribeState);
+  const {
+    isLoadingSubscribe,
+    isErrorSubscribe,
+    isSuccessSubscribe,
+    errorMessage,
+    successMessage,
+  } = useSelector((state) => state.subscribeState);
   const {
     register,
     handleSubmit,
@@ -25,7 +30,7 @@ export default function PromoSubscribe() {
   });
 
   function onSubmitSubscribe(data) {
-    dispatch(reduxGetSubscribe(data));
+    dispatch(reduxGetSubscribe({ dataMail: { ...data }, id: 1 }));
   }
   useEffect(() => {
     reset();
@@ -62,22 +67,25 @@ export default function PromoSubscribe() {
                 {errors?.mail?.message}
               </p>
             )}
-            {isErrorSubscribe ? (
-              <p className="promo-subscribe-form__message promo-subscribe-form__message--error">
-                {isErrorSubscribe}
-              </p>
-            ) : (
+
+            {isSuccessSubscribe === 1 && (
               <p className="promo-subscribe-form__message promo-subscribe-form__message--success">
-                {isSuccessSubscribe}
+                {successMessage}
+              </p>
+            )}
+            {isErrorSubscribe === 1 && (
+              <p className="promo-subscribe-form__message promo-subscribe-form__message--error">
+                {errorMessage}
               </p>
             )}
 
             <button
               className="promo-subscribe-form__button"
               type="submit"
-              disabled={isLoadingSubscribe}
+              disabled={isLoadingSubscribe === 1}
             >
-              Subscribe {isLoadingSubscribe && <div className="loader-small" />}
+              Subscribe{" "}
+              {isLoadingSubscribe === 1 && <div className="loader-small" />}
             </button>
           </form>
         </div>

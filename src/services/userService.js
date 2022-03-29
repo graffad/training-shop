@@ -83,22 +83,25 @@ class UserService {
     return res;
   }
 
-  async getProduct(id){
-    const res = await axios.get(`https://training.cleverland.by/shop/product/${id}`);
+  async getProduct(id) {
+    const res = await axios.get(
+      `https://training.cleverland.by/shop/product/${id}`
+    );
     return res;
   }
 
-  async createSubscribe(mailObj){
+  async createSubscribe(mailObj) {
     const res = await axios.post("https://training.cleverland.by/shop/email",{mailObj})
     return res
   }
 
-  async createReview(obj){
-    const res = await axios.post("https://training.cleverland.by/shop/product/review",{...obj})
-    return res
+  async createReview(obj) {
+    const res = await axios.post(
+      "https://training.cleverland.by/shop/product/review",
+      { ...obj }
+    );
+    return res;
   }
-
-
 }
 
 export default new UserService();
