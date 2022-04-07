@@ -91,14 +91,31 @@ class UserService {
   }
 
   async createSubscribe(mailObj) {
-    const res = await axios.post("https://training.cleverland.by/shop/email",{mailObj})
-    return res
+    const res = await axios.post("https://training.cleverland.by/shop/email", {
+      mailObj,
+    });
+    return res;
   }
 
   async createReview(obj) {
     const res = await axios.post(
       "https://training.cleverland.by/shop/product/review",
       { ...obj }
+    );
+    return res;
+  }
+
+  async getCountries() {
+    const res = await axios.get(
+      "https://training.cleverland.by/shop/countries"
+    );
+    return res;
+  }
+
+  async getCities(city, country) {
+    const res = await axios.post(
+      "https://training.cleverland.by/shop/search/cities",
+      { city, country }
     );
     return res;
   }

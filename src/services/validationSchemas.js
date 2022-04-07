@@ -17,4 +17,37 @@ const schemaReview = yup
   })
   .required();
 
-export { schemaSubscribe, schemaReview };
+
+// =====================================================
+// -------------------ORDER-VALIDATION ▼ -------------------
+// ======================================================
+
+
+// object values for combine validation
+
+
+const step2Values={
+    // values
+}
+const step3Values = {
+   // values
+}
+
+// split diff schemas for validation each step separately
+
+const schemaStep1 = yup.object().shape({
+  // cartItems,
+});
+const schemaStep2 = yup.object().shape({
+ ...step2Values
+});
+
+const schemaStep3 = yup.object().shape({
+    ...step3Values
+});
+
+const schemaOrder = yup.object().shape({
+    ...step2Values,...step3Values
+})
+
+export { schemaSubscribe, schemaReview,schemaStep1, schemaStep2, schemaStep3, schemaOrder };
