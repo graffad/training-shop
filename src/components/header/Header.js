@@ -34,12 +34,12 @@ export default function Header() {
       setBurgerIsActive(false);
       // document.body.classList.remove("fixed-body");
     }
-    if (
-      el.classList.contains("cart--active") ||
-      el.classList.contains("close-cart")
-    ) {
-      setIsShowCart(false);
-    }
+    // if (
+    //   el.classList.contains("cart--active") ||
+    //   el.classList.contains("close-cart")
+    // ) {
+    //   setIsShowCart(false);
+    // }
   }
   useEffect(() => {
     // document.body.classList.remove("fixed-body");
@@ -167,7 +167,7 @@ export default function Header() {
         </div>
       </div>
 
-      <Cart isShowCart={isShowCart} />
+      <Cart isShowCart={isShowCart} setIsShowCart={setIsShowCart} />
     </>
   );
 }
