@@ -428,6 +428,9 @@ svg {
   font-size: 13px;
   letter-spacing: 0.06em;
   padding: 16px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background: $gray;
     color: black;
@@ -444,13 +447,24 @@ svg {
   margin-top: 12px;
 }
 
-.cart-empty-text {
+.cart-result-title {
   font-weight: 600;
   font-size: 26px;
   text-align: center;
-  max-width: 150px;
+  max-width: 200px;
   margin: 60px auto;
   line-height: 150%;
+}
+.cart-result-text{
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  max-width: 240px;
+  margin: 0 auto;
+  line-height: 22px;
+  + p{
+    margin-top: 16px;
+  }
 }
 .cart-btn-back {
   @extend .cart-form-submit-btn;
@@ -494,6 +508,12 @@ svg {
   text-transform: uppercase;
   margin-bottom: 8px;
 }
+.order-info-text--error{
+  color: red;
+  font-weight: 500;
+  font-size: 11px;
+  position: absolute;
+}
 .order-info-input {
   width: 100%;
   font-weight: 500;
@@ -501,10 +521,37 @@ svg {
   padding: 15px;
   border: none;
   background: $grayLight;
-  margin-bottom: 40px;
+  //margin-bottom: 40px;
   &:focus {
     outline: transparent;
   }
+}
+.order-info-input-wrapper{
+  position: relative;
+  margin-bottom: 40px;
+}
+.order-info-input-wrapper--error{
+  .order-info-input{
+    //border: 1px solid red;
+    box-shadow: inset 0 0 0 1px red;
+  }
+  .custom-select__control{
+    box-shadow: inset 0 0 0 1px red;
+  }
+}
+.order-info-input-error-text{
+  bottom: -17px;
+  position: absolute;
+  padding-top: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: red;
+}
+.order-info-checkbox-error{
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 500;
+  color: red;
 }
 .radio-input {
   -webkit-appearance: none;
@@ -532,6 +579,9 @@ svg {
   &:checked {
     background: url("../public/mark-V.svg") no-repeat center;
   }
+  &--error{
+    border: 1px solid red;
+  }
 }
 .order-info-group-input {
   display: flex;
@@ -539,10 +589,11 @@ svg {
   input {
     margin-bottom: 0;
   }
-  margin-bottom: 40px;
+  //margin-bottom: 40px;
   &__password {
     width: 100%;
     display: flex;
+    position: relative;
   }
   .password-eye {
     background: $grayLight;

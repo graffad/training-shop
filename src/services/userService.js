@@ -119,6 +119,15 @@ class UserService {
     );
     return res;
   }
+
+  sendOrder(data) {
+    const newData = {
+      ...data,
+      phone: data.phone.replace(/(\(|\))/g, ""),
+      paymentMethod: data.paymentMethod.replace(/(visa|masterCard)/g, "card"),
+    };
+    delete newData.isConfirmed
+    return axios.post("https://training.cleverland.by/shop/cart",{...newData})}
 }
 
 export default new UserService();

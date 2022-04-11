@@ -1,21 +1,20 @@
 import { useFormContext, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import InputMask from "react-input-mask";
 import visaPng from "../../images/credit-cards/visa_x42.png";
 import paypalPng from "../../images/credit-cards/paypal_2_x42.png";
 import mcPng from "../../images/credit-cards/mastercard_x42.png";
 import eye from "../../images/eyeOpen.png";
 import eyeClose from "../../images/eyeClose.png";
+import { MaskCardDate } from "../../services/masksWithConditions";
 
 // PAYMENT STEP
 export default function Step3({ setStep }) {
   const {
     register,
-    formState: { errors },
-    trigger,
-    getValues,
+    formState: { errors, isSubmitting },
     control,
-    reset,
     watch,
   } = useFormContext();
   const { cartSum } = useSelector((state) => state.cart);
@@ -32,7 +31,7 @@ export default function Step3({ setStep }) {
             <input
               type="radio"
               className="radio-input"
-              value="PayPal"
+              value="paypal"
               {...register("paymentMethod")}
             />
             <img src={paypalPng} alt="paypal" />
@@ -41,7 +40,7 @@ export default function Step3({ setStep }) {
             <input
               type="radio"
               className="radio-input"
-              value="Visa"
+              value="visa"
               {...register("paymentMethod")}
             />
             <img src={visaPng} alt="visa" />
@@ -49,7 +48,7 @@ export default function Step3({ setStep }) {
           <label className="order-info-list__item">
             <input
               type="radio"
-              value="MasterCard"
+              value="masterCard"
               className="radio-input"
               {...register("paymentMethod")}
             />
@@ -58,7 +57,7 @@ export default function Step3({ setStep }) {
           <label className="order-info-list__item">
             <input
               type="radio"
-              value="Cash"
+              value="cash"
               className="radio-input"
               {...register("paymentMethod")}
             />
@@ -66,67 +65,133 @@ export default function Step3({ setStep }) {
           </label>
         </div>
 
-        {(paymentMethod === "Visa" || paymentMethod === "MasterCard") && (
+        {(paymentMethod === "visa" || paymentMethod === "masterCard") && (
           <>
             <p className="order-info-title">CARD</p>
-            <input
-              type="text"
-              placeholder="_________"
-              className="order-info-input"
-              {...register("card")}
-            />
-            <div className="order-info-group-input">
-              <input
-                type="text"
-                className="order-info-input"
-                placeholder="MM/YY"
-                {...register("cardDate")}
+            <div
+              className={`order-info-input-wrapper ${
+                errors?.card && "order-info-input-wrapper--error"
+              }`}
+            >
+              <Controller
+                name="card"
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <InputMask
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    mask="9999 9999 9999 9999 9999"
+                    className="order-info-input"
+                    alwaysShowMask
+                    value={value}
+                  />
+                )}
               />
-              <div className="order-info-group-input__password">
-                <input
-                  type={visible ? "text" : "password"}
-                  className="order-info-input"
-                  placeholder="CVV"
-                  {...register("cardCVV")}
+              {errors?.card && (
+                <p className="order-info-input-error-text">
+                  {errors.card.message}
+                </p>
+              )}
+            </div>
+            <div className="order-info-group-input">
+              <div
+                className={`order-info-input-wrapper ${
+                  errors?.cardDate && "order-info-input-wrapper--error"
+                }`}
+              >
+                <Controller
+                  name="cardDate"
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <MaskCardDate
+                      inpValue={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                    />
+                  )}
                 />
-                <button
-                  type="button"
-                  className="password-eye"
-                  onClick={() => setVisible((prev) => !prev)}
-                >
-                  <img src={visible ? eye : eyeClose} alt="eye" />
-                </button>
+                {errors?.cardDate && (
+                  <p className="order-info-input-error-text">
+                    {errors.cardDate.message}
+                  </p>
+                )}
+              </div>
+              <div
+                className={`order-info-input-wrapper ${
+                  errors?.cardCVV && "order-info-input-wrapper--error"
+                }`}
+              >
+                <div className="order-info-group-input__password">
+                  <Controller
+                    name="cardCVV"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <InputMask
+                        type={visible ? "text" : "password"}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        mask="9999"
+                        className="order-info-input"
+                        value={value}
+                        maskChar={null}
+                        placeholder="CVV"
+                      />
+                    )}
+                  />
+
+                  <button
+                    type="button"
+                    className="password-eye"
+                    onClick={() => setVisible((prev) => !prev)}
+                  >
+                    <img src={visible ? eye : eyeClose} alt="eye" />
+                  </button>
+                </div>
+                {errors?.cardCVV && (
+                  <p className="order-info-input-error-text">
+                    {errors.cardCVV.message}
+                  </p>
+                )}
               </div>
             </div>
           </>
         )}
 
-        {paymentMethod === "PayPal" && (
+        {paymentMethod === "paypal" && (
           <>
             <p className="order-info-title">E-MAIL</p>
-            <input
-              type="email"
-              placeholder="e-mail"
-              className="order-info-input"
-              {...register("cashEmail")}
-            />
+            <div
+              className={`order-info-input-wrapper ${
+                errors?.cashEmail && "order-info-input-wrapper--error"
+              }`}
+            >
+              <input
+                type="email"
+                placeholder="e-mail"
+                className="order-info-input"
+                {...register("cashEmail")}
+              />
+              {errors?.cashEmail && (
+                <p className="order-info-input-error-text">
+                  {errors.cashEmail.message}
+                </p>
+              )}
+            </div>
           </>
         )}
       </div>
-
 
       <div className="cart-products-total-price">
         <span>Total</span>${cartSum.totalPrice.toFixed(2)}
       </div>
 
       <button
-        type="button"
+        type="submit"
         className="cart-form-submit-btn"
-        onClick={() => {
-          console.log(getValues());
-        }}
+        disabled={isSubmitting}
       >
-        FURTHER
+        {paymentMethod === "cash" ? "READY" : "CHECK OUT"}
+        {isSubmitting && <span className="loader-small" />}
       </button>
       <button
         type="button"
