@@ -6,9 +6,9 @@ import sagaWatcherOrder from "./sagas/sagaOrder";
 
 export default function* rootSaga() {
   yield all([
-    fork(sagaWatcherProducts),
-    fork(sagaWatcherReview),
-    fork(sagaWatcherSubscribe),
-    fork(sagaWatcherOrder),
+    sagaWatcherProducts(),
+    sagaWatcherReview(),
+    sagaWatcherSubscribe(),
+    sagaWatcherOrder(),
   ]);
 }

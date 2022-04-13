@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactSelect from "react-select";
 import InputMask from "react-input-mask";
 import { useEffect } from "react";
-import { reduxGetOrderStoresInfo } from "../../redux/reducers/orderSlice";
+import classNames from "classnames";
+import { reduxGetOrderStores,reduxSetOrderStores } from "../../redux/reducers/orderSlice";
 import { MaskPhone } from "../../services/masksWithConditions";
 import { schemaStep2 } from "../../services/validationSchemas";
 
 // DELIVERY INFO STEP
 export default function Step2({ setStep }) {
-  let delaySearch;
   const dispatch = useDispatch();
   const { cartSum } = useSelector((state) => state.cart);
   const { storeCountries, storeCities, isLoading, errorType } = useSelector(
@@ -100,9 +100,9 @@ export default function Step2({ setStep }) {
         <p className="order-info-title">PHONE</p>
 
         <div
-          className={`order-info-input-wrapper ${
-            errors?.phone && "order-info-input-wrapper--error"
-          }`}
+          className={classNames("order-info-input-wrapper", {
+            "order-info-input-wrapper--error": errors?.phone,
+          })}
         >
           <Controller
             name="phone"
@@ -120,9 +120,9 @@ export default function Step2({ setStep }) {
 
         <p className="order-info-title">E-MAIL</p>
         <div
-          className={`order-info-input-wrapper ${
-            errors?.email && "order-info-input-wrapper--error"
-          }`}
+          className={classNames("order-info-input-wrapper", {
+            "order-info-input-wrapper--error": errors?.email,
+          })}
         >
           <input
             type="email"
@@ -141,9 +141,9 @@ export default function Step2({ setStep }) {
           <>
             <p className="order-info-title">ADDRESS</p>
             <div
-              className={`order-info-input-wrapper ${
-                errors?.country && "order-info-input-wrapper--error"
-              }`}
+              className={classNames("order-info-input-wrapper", {
+                "order-info-input-wrapper--error": errors?.country,
+              })}
             >
               <input
                 type="text"
@@ -159,9 +159,9 @@ export default function Step2({ setStep }) {
             </div>
 
             <div
-              className={`order-info-input-wrapper ${
-                errors?.city && "order-info-input-wrapper--error"
-              }`}
+              className={classNames("order-info-input-wrapper", {
+                "order-info-input-wrapper--error": errors?.city,
+              })}
             >
               <input
                 type="text"
@@ -177,9 +177,9 @@ export default function Step2({ setStep }) {
             </div>
 
             <div
-              className={`order-info-input-wrapper ${
-                errors?.street && "order-info-input-wrapper--error"
-              }`}
+              className={classNames("order-info-input-wrapper", {
+                "order-info-input-wrapper--error": errors?.street,
+              })}
             >
               <input
                 type="text"
@@ -195,9 +195,9 @@ export default function Step2({ setStep }) {
             </div>
             <div className="order-info-group-input">
               <div
-                className={`order-info-input-wrapper ${
-                  errors?.house && "order-info-input-wrapper--error"
-                }`}
+                className={classNames("order-info-input-wrapper", {
+                  "order-info-input-wrapper--error": errors?.house,
+                })}
               >
                 <input
                   type="text"
@@ -224,17 +224,18 @@ export default function Step2({ setStep }) {
               <>
                 <p className="order-info-title">POSTCODE</p>
                 <div
-                  className={`order-info-input-wrapper ${
-                    errors?.postcode && "order-info-input-wrapper--error"
-                  }`}
+                  className={classNames("order-info-input-wrapper", {
+                    "order-info-input-wrapper--error": errors?.postcode,
+                  })}
                 >
                   <Controller
                     name="postcode"
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                       <InputMask
+                        name="postcode"
                         onChange={onChange}
-                        mask="aa 999999"
+                        mask="BY 999999"
                         className="order-info-input"
                         placeholder="BY ______"
                         value={value}
@@ -258,18 +259,21 @@ export default function Step2({ setStep }) {
           <>
             <p className="order-info-title">ADDRESS OF STORE</p>
             <div
-              className={`order-info-input-wrapper ${
-                errors?.country && "order-info-input-wrapper--error"
-              }`}
+              className={classNames("order-info-input-wrapper", {
+                "order-info-input-wrapper--error": errors?.country,
+              })}
             >
               <Controller
                 name="country"
                 control={control}
                 render={({ field: { onBlur, onChange, value } }) => (
                   <ReactSelect
+                    name="country"
                     isClearable
                     value={storeCountries.find((c) => c.value === value)}
                     onChange={(val) => {
+                      dispatch(reduxSetOrderStores([]))
+                      setValue("storeAddress","")
                       if (val?.value) {
                         onChange(val?.value);
                       } else onChange("");
@@ -305,15 +309,16 @@ export default function Step2({ setStep }) {
               )}
             </div>
             <div
-              className={`order-info-input-wrapper ${
-                errors?.storeAddress && "order-info-input-wrapper--error"
-              }`}
+              className={classNames("order-info-input-wrapper", {
+                "order-info-input-wrapper--error": errors?.storeAddress,
+              })}
             >
               <Controller
                 name="storeAddress"
                 control={control}
                 render={({ field: { onBlur, onChange, value } }) => (
                   <ReactSelect
+                    name="storeAddress"
                     isClearable
                     value={storeCities.find((c) => c.value === value)}
                     onChange={(val) => {
@@ -321,19 +326,15 @@ export default function Step2({ setStep }) {
                         onChange(val?.value);
                       } else onChange("");
                     }}
-                    // send req for cities with delay typing
                     onInputChange={(val) => {
-                      clearTimeout(delaySearch);
-                      delaySearch = setTimeout(() => {
-                        if (val.length >= 3) {
-                          dispatch(
-                            reduxGetOrderStoresInfo({
-                              type: "cities",
-                              search: { city: val, country },
+                      if (val.length === 3) {
+                        dispatch(
+                            reduxGetOrderStores({
+                              city: val,
+                              country,
                             })
-                          );
-                        }
-                      }, 800);
+                        );
+                      }
                     }}
                     onBlur={onBlur}
                     className="custom-select-container"
@@ -372,9 +373,9 @@ export default function Step2({ setStep }) {
         <label className="order-info-label-ch">
           <input
             type="checkbox"
-            className={`checkbox-input ${
-              errors?.isConfirmed && "checkbox-input--error"
-            }`}
+            className={classNames("checkbox-input", {
+              "checkbox-input--error": errors?.isConfirmed,
+            })}
             {...register("isConfirmed")}
           />
           <span> I agree to the processing of my personal information</span>

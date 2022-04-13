@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import classNames from "classnames";
 import { reduxSetCart } from "../../redux/reducers/cartSlice";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
 import { schemaOrder } from "../../services/validationSchemas";
-import { reduxGetOrderStoresInfo } from "../../redux/reducers/orderSlice";
+import { reduxGetOrderCountries } from "../../redux/reducers/orderSlice";
 import UserService from "../../services/userService";
 
 export default function Cart({ isShowCart, setIsShowCart }) {
@@ -16,6 +17,7 @@ export default function Cart({ isShowCart, setIsShowCart }) {
   const cartProducts = useSelector((state) => state.cart.products);
   const { cartSum } = useSelector((state) => state.cart);
   const { storeCountries } = useSelector((state) => state.orderState);
+  const insideAreaRef = useRef(null);
 
   // cart items / delivery / payment / result
   const [step, setStep] = useState(1);
@@ -40,7 +42,7 @@ export default function Cart({ isShowCart, setIsShowCart }) {
     // if onBlur: error fire on blur, but can`t be cleared in focus if valid
     // if all: only masked fields wont work properly (fires error from 1st)
     // if combine with hardcode manual onChange : will be large and ugly.
-    mode: "all",
+    mode: "onBlur",
     // reValidateMode: "onChange",
     resolver: yupResolver(schemaOrder),
   });
@@ -48,7 +50,7 @@ export default function Cart({ isShowCart, setIsShowCart }) {
   const deliveryMethod = watch("deliveryMethod");
   const paymentMethod = watch("paymentMethod");
 
-  const onSubmit = async (data) => {
+  async function onSubmit(data) {
     setIsOrderError(false);
     setOrderErrorMessage("");
     try {
@@ -56,22 +58,18 @@ export default function Cart({ isShowCart, setIsShowCart }) {
       setStep(4);
       localStorage.setItem("cart", JSON.stringify([]));
       dispatch(reduxSetCart([]));
+      reset();
     } catch (err) {
       setIsOrderError(true);
       setOrderErrorMessage(err?.message);
       setStep(4);
     }
-  };
+  }
 
-  function closeCart(el) {
-    if (
-      el.classList.contains("cart--active") ||
-      el.classList.contains("close-cart")
-    ) {
-      reset();
-      setIsShowCart(false);
-      setStep(1);
-    }
+  function closeCart() {
+    reset();
+    setIsShowCart(false);
+    setStep(1);
   }
 
   // init cart in redux from local or create new, redux-persist?
@@ -91,28 +89,35 @@ export default function Cart({ isShowCart, setIsShowCart }) {
 
   // close cart and reset
   useEffect(() => {
-    document.addEventListener("click", (event) => {
-      closeCart(event.target);
-    });
+    function onClickOver(e) {
+      if (isShowCart && !insideAreaRef.current.contains(e.target)) {
+        closeCart();
+      }
+    }
+    document.addEventListener("click", onClickOver, { capture: true });
     return () => {
-      document.removeEventListener("click", closeCart);
+      document.removeEventListener("click", onClickOver);
     };
-  }, []);
+  }, [isShowCart]);
 
   // reset or unregister step2
   useEffect(() => {
     setValue("country", "");
-    if (deliveryMethod === "pickup from post offices") {
-      unregister("storeAddress");
-    }
-    if (deliveryMethod === "express delivery") {
-      unregister(["postcode", "storeAddress"]);
-    }
-    if (deliveryMethod === "store pickup") {
-      unregister(["postcode", "city", "house", "apartment", "street"]);
-      if (storeCountries.length === 0) {
-        dispatch(reduxGetOrderStoresInfo({ type: "countries" }));
-      }
+    switch (deliveryMethod) {
+      case "pickup from post offices":
+        unregister("storeAddress");
+        break;
+      case "express delivery":
+        unregister(["postcode", "storeAddress"]);
+        break;
+      case "store pickup":
+        unregister(["postcode", "city", "house", "apartment", "street"]);
+        if (storeCountries.length === 0) {
+          dispatch(reduxGetOrderCountries());
+        }
+        break;
+      default:
+        break;
     }
   }, [deliveryMethod]);
 
@@ -121,14 +126,19 @@ export default function Cart({ isShowCart, setIsShowCart }) {
     setValue("card", "");
     setValue("cardDate", "");
     setValue("cardCVV", "");
-    if (paymentMethod === "paypal") {
-      unregister(["card", "cardDate", "cardCVV", "cashEmail"]);
-    }
-    if (paymentMethod === "visa" || paymentMethod === "masterCard") {
-      unregister(["cashEmail"]);
-    }
-    if (paymentMethod === "visa" || paymentMethod === "masterCard") {
-      unregister(["card", "cardDate", "cardCVV", "cashEmail"]);
+    switch (paymentMethod) {
+      case "paypal":
+        unregister(["card", "cardDate", "cardCVV"]);
+        break;
+      case "visa":
+      case "masterCard":
+        unregister(["cashEmail"]);
+        break;
+      case "cash":
+        unregister(["card", "cardDate", "cardCVV", "cashEmail"]);
+        break;
+      default:
+        break;
     }
   }, [paymentMethod]);
 
@@ -147,47 +157,48 @@ export default function Cart({ isShowCart, setIsShowCart }) {
 
   return (
     <div
-      className={`cart-outer ${isShowCart ? "cart--active" : ""}`}
+      className={classNames("cart-outer", { "cart--active": isShowCart })}
       data-test-id="cart"
     >
-      <div className="cart-inner">
+      <div className="cart-inner" ref={insideAreaRef}>
         <div className="cart-inner__header">
           <span>Shopping Cart</span>
-          <button type="button" className="cart-btn-close close-cart">
+          <button
+            type="button"
+            className="cart-btn-close"
+            onClick={() => closeCart()}
+          >
             {" "}
           </button>
         </div>
         <div className="cart-inner__content">
-          {cartProducts.length > 0 && (
+          {cartProducts.length > 0 && step !== 4 && (
             <>
-              {step !== 4 && (
-                <div className="cart-steps">
-                  <p
-                    className={`cart-steps__item ${
-                      step === 1 && "cart-steps__item--active"
-                    }`}
-                  >
-                    Item in Cart
-                  </p>
-                  <span>/</span>
-                  <p
-                    className={`cart-steps__item ${
-                      step === 2 && "cart-steps__item--active"
-                    }`}
-                  >
-                    Delivery Info
-                  </p>
-                  <span>/</span>
-                  <p
-                    className={`cart-steps__item ${
-                      step === 3 && "cart-steps__item--active"
-                    }`}
-                  >
-                    Payment
-                  </p>
-                </div>
-              )}
-
+              <div className="cart-steps">
+                <p
+                  className={`cart-steps__item ${
+                    step === 1 && "cart-steps__item--active"
+                  }`}
+                >
+                  Item in Cart
+                </p>
+                <span>/</span>
+                <p
+                  className={`cart-steps__item ${
+                    step === 2 && "cart-steps__item--active"
+                  }`}
+                >
+                  Delivery Info
+                </p>
+                <span>/</span>
+                <p
+                  className={`cart-steps__item ${
+                    step === 3 && "cart-steps__item--active"
+                  }`}
+                >
+                  Payment
+                </p>
+              </div>
               <FormProvider {...formMethods}>
                 <form
                   className="cart-form-wrapper"
@@ -201,7 +212,11 @@ export default function Cart({ isShowCart, setIsShowCart }) {
           {cartProducts.length === 0 && step !== 4 && (
             <>
               <p className="cart-result-title">Sorry, your cart is empty</p>
-              <button type="button" className="cart-btn-back close-cart">
+              <button
+                type="button"
+                className="cart-btn-back"
+                onClick={() => closeCart()}
+              >
                 BACK TO SHOPPING
               </button>
             </>
@@ -211,6 +226,7 @@ export default function Cart({ isShowCart, setIsShowCart }) {
               setStep={setStep}
               isOrderError={isOrderError}
               orderErrorMessage={orderErrorMessage}
+              setIsShowCart={setIsShowCart}
             />
           )}
         </div>

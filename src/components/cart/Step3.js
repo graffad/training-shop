@@ -2,6 +2,7 @@ import { useFormContext, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import InputMask from "react-input-mask";
+import classNames from "classnames";
 import visaPng from "../../images/credit-cards/visa_x42.png";
 import paypalPng from "../../images/credit-cards/paypal_2_x42.png";
 import mcPng from "../../images/credit-cards/mastercard_x42.png";
@@ -69,15 +70,16 @@ export default function Step3({ setStep }) {
           <>
             <p className="order-info-title">CARD</p>
             <div
-              className={`order-info-input-wrapper ${
-                errors?.card && "order-info-input-wrapper--error"
-              }`}
+              className={classNames("order-info-input-wrapper", {
+                "order-info-input-wrapper--error": errors?.card,
+              })}
             >
               <Controller
                 name="card"
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <InputMask
+                    name="card"
                     onChange={onChange}
                     onBlur={onBlur}
                     mask="9999 9999 9999 9999 9999"
@@ -95,9 +97,9 @@ export default function Step3({ setStep }) {
             </div>
             <div className="order-info-group-input">
               <div
-                className={`order-info-input-wrapper ${
-                  errors?.cardDate && "order-info-input-wrapper--error"
-                }`}
+                className={classNames("order-info-input-wrapper", {
+                  "order-info-input-wrapper--error": errors?.cardDate,
+                })}
               >
                 <Controller
                   name="cardDate"
@@ -117,9 +119,9 @@ export default function Step3({ setStep }) {
                 )}
               </div>
               <div
-                className={`order-info-input-wrapper ${
-                  errors?.cardCVV && "order-info-input-wrapper--error"
-                }`}
+                className={classNames("order-info-input-wrapper", {
+                  "order-info-input-wrapper--error": errors?.cardCVV,
+                })}
               >
                 <div className="order-info-group-input__password">
                   <Controller
@@ -127,6 +129,7 @@ export default function Step3({ setStep }) {
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                       <InputMask
+                        name="cardCVV"
                         type={visible ? "text" : "password"}
                         onChange={onChange}
                         onBlur={onBlur}
@@ -161,9 +164,9 @@ export default function Step3({ setStep }) {
           <>
             <p className="order-info-title">E-MAIL</p>
             <div
-              className={`order-info-input-wrapper ${
-                errors?.cashEmail && "order-info-input-wrapper--error"
-              }`}
+              className={classNames("order-info-input-wrapper", {
+                "order-info-input-wrapper--error": errors?.cashEmail,
+              })}
             >
               <input
                 type="email"

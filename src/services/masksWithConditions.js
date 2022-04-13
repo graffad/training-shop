@@ -1,6 +1,6 @@
 import InputMask from "react-input-mask";
 
-function MaskCardDate({ onChange, inpValue,onBlur }) {
+function MaskCardDate({ onChange, inpValue, onBlur }) {
   const date = new Date();
   const year = date.getFullYear().toString();
   const yearLastChar = year[3];
@@ -36,6 +36,7 @@ function MaskCardDate({ onChange, inpValue,onBlur }) {
   };
   return (
     <InputMask
+      name="cardDate"
       mask={mask}
       value={inpValue}
       onChange={onChange}
@@ -78,6 +79,7 @@ function MaskPhone({ onChange, inpValue, onBlur }) {
 
   return (
     <InputMask
+      name="phone"
       mask={mask}
       value={inpValue}
       onChange={onChange}
@@ -89,15 +91,4 @@ function MaskPhone({ onChange, inpValue, onBlur }) {
     />
   );
 }
-
-
-
-
-
-
-
-
-
-
-
 export { MaskCardDate, MaskPhone };
