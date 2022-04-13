@@ -2,27 +2,46 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import UserService from "../../services/userService";
 
 import {
-  reduxGetOrderStoresInfo,
-  reduxSetOrderStoresInfo,
+  reduxSetOrderCountries,
   reduxSetOrderError,
+  reduxGetOrderCountries,
+  reduxGetOrderStores,
+  reduxSetOrderStores,
 } from "../reducers/orderSlice";
 
-function* sagaWorkerOrder({payload}) {
+function* sagaWorkerOrderCountries() {
   try {
-    if(payload.type === "countries"){
-      const res = yield call(() => UserService.getCountries());
-      yield put(reduxSetOrderStoresInfo({type:payload.type,data:res.data}));
-    }
-    if(payload.type === "cities"){
-      const {city,country} = payload.search
-      const res = yield call(() => UserService.getCities(city,country));
-      yield put(reduxSetOrderStoresInfo({type:payload.type,data:res.data}));
-    }
-
+    const res = yield call(() => UserService.getCountries());
+    const data = res.data.map((item) => ({
+      value: item.name,
+      label: item.name,
+    }));
+    yield put(reduxSetOrderCountries(data));
   } catch (e) {
     yield put(
       reduxSetOrderError({
-        error: payload.type,
+        errorType: "countries",
+        errorMessage: "ошибка загрузки",
+      })
+    );
+  }
+}
+
+function* sagaWorkerOrderStores({ payload }) {
+  try {
+    const { city, country } = payload;
+    if (city && country) {
+      const res = yield call(() => UserService.getCities(city, country));
+      const data = res.data.map((item) => ({
+        value: item.city,
+        label: item.city,
+      }));
+      yield put(reduxSetOrderStores(data));
+    } else yield put(reduxSetOrderStores(payload));
+  } catch (e) {
+    yield put(
+      reduxSetOrderError({
+        errorType: "cities",
         errorMessage: "ошибка загрузки",
       })
     );
@@ -30,5 +49,6 @@ function* sagaWorkerOrder({payload}) {
 }
 
 export default function* sagaWatcherOrder() {
-  yield takeEvery(reduxGetOrderStoresInfo, sagaWorkerOrder);
+  yield takeEvery(reduxGetOrderCountries, sagaWorkerOrderCountries);
+  yield takeEvery(reduxGetOrderStores, sagaWorkerOrderStores);
 }

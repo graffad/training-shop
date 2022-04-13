@@ -15,39 +15,39 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     // actions
-    reduxGetOrderStoresInfo(state, action) {
-      // payload : {type: countries or cities, search: {city:qwe, country:"sss"} }
-      state.isLoading = action.payload.type;
+    reduxGetOrderCountries(state, action) {
+      state.isLoading = "countries";
       state.errorType = false;
     },
-    reduxSetOrderStoresInfo(state, action) {
-      const resultCountries = action.payload.data.map((item) => ({
-        value: item.name,
-        label: item.name,
-      }));
-
-      const resultCities = action.payload.data.map(item =>({
-        value: item.city,
-        label: item.city,
-      }))
-      if (action.payload.type === "countries") {
-        state.storeCountries = resultCountries;
-      } else state.storeCities = resultCities;
+    reduxGetOrderStores(state, action) {
+      state.isLoading = "cities";
+      state.errorType = false;
+    },
+    reduxSetOrderCountries(state, action) {
+      state.storeCountries = action.payload;
+      state.isLoading = false;
+      state.errorType = false;
+    },
+    reduxSetOrderStores(state, action) {
+      state.storeCities = action.payload;
       state.isLoading = false;
       state.errorType = false;
     },
     reduxSetOrderError(state, action) {
       state.isLoading = false;
       // types : countries / cities / order
-      state.errorType = action.payload.error;
-      state.errorMessage = action.payload.errorMessage;
+      const { errorType, errorMessage } = action.payload;
+      state.errorType = errorType;
+      state.errorMessage = errorMessage;
     },
   },
 });
 
 export const {
-  reduxGetOrderStoresInfo,
-  reduxSetOrderStoresInfo,
+  reduxGetOrderCountries,
+  reduxSetOrderCountries,
+  reduxGetOrderStores,
+  reduxSetOrderStores,
   reduxSetOrderError,
 } = orderSlice.actions;
 

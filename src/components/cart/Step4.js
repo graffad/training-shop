@@ -2,6 +2,7 @@ export default function Step4({
   isOrderError = false,
   orderErrorMessage = "",
   setStep,
+  setIsShowCart,
 }) {
   return (
     <>
@@ -34,7 +35,14 @@ export default function Step4({
             Information about your order will appear in your e-mail.
           </p>
           <p className="cart-result-text">Our manager will call you back.</p>
-          <button type="button" className="cart-btn-back close-cart">
+          <button
+            type="button"
+            className="cart-btn-back"
+            onClick={() => {
+              setIsShowCart(false);
+              setStep(1);
+            }}
+          >
             BACK TO SHOPPING
           </button>
         </>
