@@ -41,6 +41,14 @@ export default function Step2({ setStep }) {
     }
   }, [errorType]);
 
+  // HACK FOR TESTS, react-select issue
+  useEffect(() => {
+    const inpCountry = document.querySelector("input[name='country']");
+    inpCountry.placeholder = "Country";
+    const inpStore = document.querySelector("input[name='storeAddress']");
+    inpStore.placeholder = "Store address";
+  }, [deliveryMethod]);
+
   function passNext() {
     schemaStep2
       .validate(getValues())

@@ -58,7 +58,7 @@ export default function Cart({ isShowCart, setIsShowCart }) {
       setStep(4);
       localStorage.setItem("cart", JSON.stringify([]));
       dispatch(reduxSetCart([]));
-      reset();
+      // reset();
     } catch (err) {
       setIsOrderError(true);
       setOrderErrorMessage(err?.message);
@@ -227,6 +227,8 @@ export default function Cart({ isShowCart, setIsShowCart }) {
               isOrderError={isOrderError}
               orderErrorMessage={orderErrorMessage}
               setIsShowCart={setIsShowCart}
+              closeCart={closeCart}
+              reset={reset}
             />
           )}
         </div>

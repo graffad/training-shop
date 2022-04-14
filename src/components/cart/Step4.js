@@ -2,7 +2,8 @@ export default function Step4({
   isOrderError = false,
   orderErrorMessage = "",
   setStep,
-  setIsShowCart,
+  closeCart,
+  reset,
 }) {
   return (
     <>
@@ -24,7 +25,10 @@ export default function Step4({
           <button
             type="button"
             className="cart-form-view-cart-btn"
-            onClick={() => setStep(1)}
+            onClick={() => {
+              setStep(1);
+              reset();
+            }}
           >
             VIEW CART
           </button>
@@ -39,8 +43,7 @@ export default function Step4({
             type="button"
             className="cart-btn-back"
             onClick={() => {
-              setIsShowCart(false);
-              setStep(1);
+              closeCart();
             }}
           >
             BACK TO SHOPPING
