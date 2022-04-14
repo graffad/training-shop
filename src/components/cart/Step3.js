@@ -82,7 +82,7 @@ export default function Step3({ setStep }) {
                     name="card"
                     onChange={onChange}
                     onBlur={onBlur}
-                    mask="9999 9999 9999 9999 9999"
+                    mask="9999 9999 9999 9999"
                     className="order-info-input"
                     alwaysShowMask
                     value={value}
@@ -200,7 +200,7 @@ export default function Step3({ setStep }) {
         type="button"
         className="cart-form-view-cart-btn"
         onClick={() => {
-          setStep(1);
+          setStep(2);
         }}
       >
         VIEW CART
