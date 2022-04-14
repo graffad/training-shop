@@ -4,7 +4,10 @@ import ReactSelect from "react-select";
 import InputMask from "react-input-mask";
 import { useEffect } from "react";
 import classNames from "classnames";
-import { reduxGetOrderStores,reduxSetOrderStores } from "../../redux/reducers/orderSlice";
+import {
+  reduxGetOrderStores,
+  reduxSetOrderStores,
+} from "../../redux/reducers/orderSlice";
 import { MaskPhone } from "../../services/masksWithConditions";
 import { schemaStep2 } from "../../services/validationSchemas";
 
@@ -329,10 +332,10 @@ export default function Step2({ setStep }) {
                     onInputChange={(val) => {
                       if (val.length === 3) {
                         dispatch(
-                            reduxGetOrderStores({
-                              city: val,
-                              country,
-                            })
+                          reduxGetOrderStores({
+                            city: val,
+                            country,
+                          })
                         );
                       }
                     }}
@@ -340,6 +343,7 @@ export default function Step2({ setStep }) {
                     className="custom-select-container"
                     classNamePrefix="custom-select"
                     // menuShouldScrollIntoView
+                    // blurInputOnSelect
                     noOptionsMessage={() =>
                       errorType === "cities"
                         ? "ошибка загрузки"
@@ -366,6 +370,11 @@ export default function Step2({ setStep }) {
                   {errors.storeAddress.message}
                 </p>
               )}
+
+              {
+                // hack for tests when input disabled, react-select issue
+                country === "" && <input type="hidden" name="storeAddress" disabled />
+              }
             </div>
           </>
         )}
