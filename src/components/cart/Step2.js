@@ -46,8 +46,9 @@ export default function Step2({ setStep }) {
     const inpCountry = document.querySelector("input[name='country']");
     inpCountry.placeholder = "Country";
     const inpStore = document.querySelector("input[name='storeAddress']");
-    inpStore.placeholder = "Store address";
-  }, [deliveryMethod]);
+    console.log(inpStore)
+    if(inpStore !== null){inpStore.placeholder = "Store address"}
+  }, [deliveryMethod,country]);
 
   function passNext() {
     schemaStep2
@@ -381,7 +382,7 @@ export default function Step2({ setStep }) {
 
               {
                 // hack for tests when input disabled, react-select issue
-                country === "" && <input type="hidden" name="storeAddress" disabled />
+                country === "" && <input type="hidden" name="storeAddress" disabled/>
               }
             </div>
           </>
