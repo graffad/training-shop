@@ -46,13 +46,14 @@ export default function Cart({ isShowCart, setIsShowCart }) {
     // reValidateMode: "onChange",
     resolver: yupResolver(schemaOrder),
   });
-  const { setValue, unregister, watch, reset } = formMethods;
+  const { setValue, unregister, watch, reset, getValues } = formMethods;
   const deliveryMethod = watch("deliveryMethod");
   const paymentMethod = watch("paymentMethod");
 
   async function onSubmit(data) {
     setIsOrderError(false);
     setOrderErrorMessage("");
+    console.log(data)
     try {
       const res = await UserService.sendOrder(data);
       setStep(4);
@@ -90,7 +91,7 @@ export default function Cart({ isShowCart, setIsShowCart }) {
   // close cart and reset
   useEffect(() => {
     function onClickOver(e) {
-      if (isShowCart && !insideAreaRef.current.contains(e.target)) {
+      if (isShowCart && !insideAreaRef.current?.contains(e.target)) {
         closeCart();
       }
     }

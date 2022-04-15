@@ -10,9 +10,11 @@ import {
 } from "../../redux/reducers/orderSlice";
 import { MaskPhone } from "../../services/masksWithConditions";
 import { schemaStep2 } from "../../services/validationSchemas";
+import { CustomSelectCountries, CustomSelectCities } from "./CustomInputs";
 
 // DELIVERY INFO STEP
 export default function Step2({ setStep }) {
+
   const dispatch = useDispatch();
   const { cartSum } = useSelector((state) => state.cart);
   const { storeCountries, storeCities, isLoading, errorType } = useSelector(
@@ -30,7 +32,7 @@ export default function Step2({ setStep }) {
   } = useFormContext();
   const deliveryMethod = watch("deliveryMethod");
   const country = watch("country");
-
+  const storeAddress = watch("storeAddress");
   // set custom error to form if request countries || cities is failed
   useEffect(() => {
     if (errorType === "countries") {
@@ -40,15 +42,6 @@ export default function Step2({ setStep }) {
       setError("storeAddress", { message: "ошибка загрузки" });
     }
   }, [errorType]);
-
-  // HACK FOR TESTS, react-select issue
-  useEffect(() => {
-    const inpCountry = document.querySelector("input[name='country']");
-    inpCountry.placeholder = "Country";
-    const inpStore = document.querySelector("input[name='storeAddress']");
-    console.log(inpStore)
-    if(inpStore !== null){inpStore.placeholder = "Store address"}
-  }, [deliveryMethod,country]);
 
   function passNext() {
     schemaStep2
@@ -279,37 +272,12 @@ export default function Step2({ setStep }) {
                 name="country"
                 control={control}
                 render={({ field: { onBlur, onChange, value } }) => (
-                  <ReactSelect
-                    name="country"
-                    isClearable
-                    value={storeCountries.find((c) => c.value === value)}
-                    onChange={(val) => {
-                      dispatch(reduxSetOrderStores([]))
-                      setValue("storeAddress","")
-                      if (val?.value) {
-                        onChange(val?.value);
-                      } else onChange("");
-                    }}
+                  <CustomSelectCountries
+                    array={storeCountries}
+                    currentValue={country}
+                    setValue={setValue}
                     onBlur={onBlur}
-                    className="custom-select-container"
-                    classNamePrefix="custom-select"
-                    // menuShouldScrollIntoView
-                    noOptionsMessage={() =>
-                      errorType === "countries"
-                        ? "ошибка загрузки"
-                        : "countries not found"
-                    }
-                    placeholder="Country"
-                    maxMenuHeight={130}
-                    theme={(theme) => ({
-                      ...theme,
-                      colors: {
-                        ...theme.colors,
-                        primary25: "#f8f8f8",
-                        primary: "#f8f8f8",
-                      },
-                    })}
-                    options={storeCountries}
+                    trigger={trigger}
                     isLoading={isLoading === "countries"}
                   />
                 )}
@@ -320,6 +288,7 @@ export default function Step2({ setStep }) {
                 </p>
               )}
             </div>
+
             <div
               className={classNames("order-info-input-wrapper", {
                 "order-info-input-wrapper--error": errors?.storeAddress,
@@ -329,61 +298,25 @@ export default function Step2({ setStep }) {
                 name="storeAddress"
                 control={control}
                 render={({ field: { onBlur, onChange, value } }) => (
-                  <ReactSelect
-                    name="storeAddress"
-                    isClearable
-                    value={storeCities.find((c) => c.value === value)}
-                    onChange={(val) => {
-                      if (val?.value) {
-                        onChange(val?.value);
-                      } else onChange("");
-                    }}
-                    onInputChange={(val) => {
-                      if (val.length === 3) {
-                        dispatch(
-                          reduxGetOrderStores({
-                            city: val,
-                            country,
-                          })
-                        );
-                      }
-                    }}
+                  <CustomSelectCities
+                    array={storeCities}
+                    currentValue={storeAddress}
+                    setValue={setValue}
                     onBlur={onBlur}
-                    className="custom-select-container"
-                    classNamePrefix="custom-select"
-                    // menuShouldScrollIntoView
-                    // blurInputOnSelect
-                    noOptionsMessage={() =>
-                      errorType === "cities"
-                        ? "ошибка загрузки"
-                        : "stores not found"
-                    }
-                    placeholder="Store address"
-                    maxMenuHeight={130}
-                    theme={(theme) => ({
-                      ...theme,
-                      colors: {
-                        ...theme.colors,
-                        primary25: "#f8f8f8",
-                        primary: "#f8f8f8",
-                      },
-                    })}
-                    options={storeCities}
-                    isDisabled={country === ""}
+                    trigger={trigger}
+                    country={country}
+                    setError={setError}
+                    disabled={country === ""}
                     isLoading={isLoading === "cities"}
                   />
                 )}
               />
+
               {errors?.storeAddress && (
                 <p className="order-info-input-error-text">
                   {errors.storeAddress.message}
                 </p>
               )}
-
-              {
-                // hack for tests when input disabled, react-select issue
-                country === "" && <input type="hidden" name="storeAddress" disabled/>
-              }
             </div>
           </>
         )}
