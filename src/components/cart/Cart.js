@@ -95,9 +95,15 @@ export default function Cart({ isShowCart, setIsShowCart }) {
         closeCart();
       }
     }
+    // clear errors on focus
+    function onFocusInput(e){
+      clearErrors(e.target?.name)
+    }
     document.addEventListener("click", onClickOver, { capture: true });
+    insideAreaRef.current.addEventListener("focus", onFocusInput, { capture: true });
     return () => {
       document.removeEventListener("click", onClickOver);
+      insideAreaRef.current.removeEventListener("focus", onFocusInput);
     };
   }, [isShowCart]);
 

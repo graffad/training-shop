@@ -154,9 +154,6 @@ export default function Step2({ setStep }) {
                 type="text"
                 className="order-info-input"
                 placeholder="Country"
-                onFocus={() => {
-                  clearErrors("country");
-                }}
                 {...register("country")}
               />
               {errors?.country && (
