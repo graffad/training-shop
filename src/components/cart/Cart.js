@@ -46,7 +46,7 @@ export default function Cart({ isShowCart, setIsShowCart }) {
     // reValidateMode: "onChange",
     resolver: yupResolver(schemaOrder),
   });
-  const { setValue, unregister, watch, reset, getValues } = formMethods;
+  const { setValue, unregister, watch, reset, clearErrors } = formMethods;
   const deliveryMethod = watch("deliveryMethod");
   const paymentMethod = watch("paymentMethod");
 
@@ -104,6 +104,7 @@ export default function Cart({ isShowCart, setIsShowCart }) {
   // reset or unregister step2
   useEffect(() => {
     setValue("country", "");
+    clearErrors()
     switch (deliveryMethod) {
       case "pickup from post offices":
         unregister("storeAddress");
