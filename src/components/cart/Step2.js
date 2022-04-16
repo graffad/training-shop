@@ -14,7 +14,6 @@ import { CustomSelectCountries, CustomSelectCities } from "./CustomInputs";
 
 // DELIVERY INFO STEP
 export default function Step2({ setStep }) {
-
   const dispatch = useDispatch();
   const { cartSum } = useSelector((state) => state.cart);
   const { storeCountries, storeCities, isLoading, errorType } = useSelector(
@@ -29,6 +28,7 @@ export default function Step2({ setStep }) {
     control,
     setValue,
     setError,
+    clearErrors,
   } = useFormContext();
   const deliveryMethod = watch("deliveryMethod");
   const country = watch("country");
@@ -154,6 +154,9 @@ export default function Step2({ setStep }) {
                 type="text"
                 className="order-info-input"
                 placeholder="Country"
+                onFocus={() => {
+                  clearErrors("country");
+                }}
                 {...register("country")}
               />
               {errors?.country && (
