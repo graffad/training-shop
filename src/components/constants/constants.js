@@ -55,6 +55,40 @@ const sliderPromo = [
   },
 ];
 
+const cartDefaultValues = {
+  deliveryMethod: "pickup from post offices",
+  country: "",
+  storeAddress: "",
+  paymentMethod: "visa",
+  phone: "",
+  totalPrice: "",
+  isConfirmed: false,
+  postcode: "",
+  cardDate: "",
+  card: "",
+  cardCVV: "",
+};
+const cartConstTypes = {
+  // delivery types ↓
+  POST_OFFICES: "pickup from post offices",
+  EXPRESS_DELIVERY: "express delivery",
+  STORE_PICKUP: "store pickup",
+  // condition types ↓
+  COUNTRIES: "countries",
+  CITIES: "cities",
+  // payment types ↓
+  VISA: "visa",
+  MASTER_CARD: "masterCard",
+  CASH: "cash",
+  PAYPAL: "paypal",
+};
+
+const modalReviewDefaultValues = {
+  rating: 1,
+  id: "",
+  name: "",
+  text: "",
+};
 
 export {
   headerNav,
@@ -63,4 +97,7 @@ export {
   footerNavUseful,
   sliderPromo,
   PROMO_FILTERS,
+  cartDefaultValues,
+  cartConstTypes,
+  modalReviewDefaultValues,
 };

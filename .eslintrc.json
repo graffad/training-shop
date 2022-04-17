@@ -28,6 +28,7 @@
     "react/no-array-index-key": 1,
     "react/prop-types": 1,
     "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/mouse-events-have-key-events": 1,
     "class-methods-use-this": 1,
     "react/jsx-no-bind": 0,
     "react/jsx-props-no-spreading": 1,

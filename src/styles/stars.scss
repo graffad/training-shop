@@ -1,0 +1,8 @@
+.stars__item {
+  fill: $gray;
+  width: 10px;
+  height: 10px;
+  &--gold {
+    fill: #f0cc84;
+  }
+}

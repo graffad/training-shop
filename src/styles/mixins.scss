@@ -1,0 +1,21 @@
+@mixin limitMaxRows($rows: 4) {
+  display: -webkit-box;
+  -webkit-line-clamp: $rows;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@mixin scrollBar($widthOrHeight: "width", $size: 3px) {
+  &::-webkit-scrollbar {
+    @if $widthOrHeight == "width" {
+      width: $size;
+    } @else if($widthOrHeight == "height") {
+      height: $size;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: $gray;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #8d8b8b;
+  }
+}

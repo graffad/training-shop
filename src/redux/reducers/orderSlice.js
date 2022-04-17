@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {cartConstTypes} from "../../components/constants/constants";
 
+const {COUNTRIES,CITIES} = cartConstTypes
 // all order form values is unnecessary here
 // only requested + loading + errors state
 const initialState = {
@@ -16,11 +18,11 @@ const orderSlice = createSlice({
   reducers: {
     // actions
     reduxGetOrderCountries(state, action) {
-      state.isLoading = "countries";
+      state.isLoading = COUNTRIES;
       state.errorType = false;
     },
     reduxGetOrderStores(state, action) {
-      state.isLoading = "cities";
+      state.isLoading = CITIES;
       state.errorType = false;
     },
     reduxSetOrderCountries(state, action) {

@@ -3,15 +3,18 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import InputMask from "react-input-mask";
 import classNames from "classnames";
+import { MaskCardDate } from "../../services/masksWithConditions";
+import {cartConstTypes} from "../constants/constants";
+// icons
 import visaPng from "../../images/credit-cards/visa_x42.png";
 import paypalPng from "../../images/credit-cards/paypal_2_x42.png";
 import mcPng from "../../images/credit-cards/mastercard_x42.png";
 import eye from "../../images/eyeOpen.png";
 import eyeClose from "../../images/eyeClose.png";
-import { MaskCardDate } from "../../services/masksWithConditions";
 
 // PAYMENT STEP
 export default function Step3({ setStep }) {
+    const {VISA,MASTER_CARD,CASH,PAYPAL} = cartConstTypes
   const {
     register,
     formState: { errors, isSubmitting },
@@ -66,7 +69,7 @@ export default function Step3({ setStep }) {
           </label>
         </div>
 
-        {(paymentMethod === "visa" || paymentMethod === "masterCard") && (
+        {(paymentMethod === VISA || paymentMethod === MASTER_CARD) && (
           <>
             <p className="order-info-title">CARD</p>
             <div
@@ -160,7 +163,7 @@ export default function Step3({ setStep }) {
           </>
         )}
 
-        {paymentMethod === "paypal" && (
+        {paymentMethod === PAYPAL && (
           <>
             <p className="order-info-title">E-MAIL</p>
             <div
@@ -193,7 +196,7 @@ export default function Step3({ setStep }) {
         className="cart-form-submit-btn"
         disabled={isSubmitting}
       >
-        {paymentMethod === "cash" ? "READY" : "CHECK OUT"}
+        {paymentMethod === CASH ? "READY" : "CHECK OUT"}
         {isSubmitting && <span className="loader-small" />}
       </button>
       <button

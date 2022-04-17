@@ -1,0 +1,14 @@
+.product-profile-slider {
+  max-height: 560px;
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  .slider {
+    max-width: 448px;
+    margin: 0;
+  }
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+  }
+}

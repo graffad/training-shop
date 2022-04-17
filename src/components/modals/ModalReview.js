@@ -3,12 +3,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import classNames from "classnames";
 import { ReactComponent as Star } from "../products/icons/star.svg";
 import { schemaReview } from "../../services/validationSchemas";
 import {
   reduxCreateReviewReq,
   reduxHideModalReview,
 } from "../../redux/reducers/reviewSlice";
+import { modalReviewDefaultValues } from "../constants/constants";
 
 export default function ModalReview() {
   const [starState, setStarState] = useState(1);
@@ -21,10 +23,10 @@ export default function ModalReview() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isDirty, isValid }, // isSubmitting ???,
+    formState: { errors, isDirty },
     reset,
   } = useForm({
-    defaultValues: { rating: 1, id: "", name: "", text: "" },
+    defaultValues: modalReviewDefaultValues,
     resolver: yupResolver(schemaReview),
     mode: "onChange",
   });
@@ -44,10 +46,7 @@ export default function ModalReview() {
     setStarState(1);
     reset();
     setValue("id", params.id);
-    document.body.classList.remove("fixed-body");
-    if (showModalReview) {
-      document.body.classList.add("fixed-body");
-    }
+    document.body.className = classNames({ "fixed-body": showModalReview });
   }, [showModalReview, params]);
 
   function onSubmitReview(data) {
@@ -72,7 +71,6 @@ export default function ModalReview() {
         <h3 className="modal-reviews-header">White a review</h3>
         <div className="stars">
           {[...Array(5)].map((star, ind) => (
-            // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
             <button
               type="button"
               key={ind}
@@ -85,9 +83,9 @@ export default function ModalReview() {
               onMouseLeave={() => setStarHover(undefined)}
             >
               <Star
-                className={`stars__item ${
-                  (starHover || starState) >= ind + 1 ? "stars__item--gold" : ""
-                }`}
+                className={classNames("stars__item", {
+                  "stars__item--gold": (starHover || starState) >= ind + 1,
+                })}
               />
             </button>
           ))}

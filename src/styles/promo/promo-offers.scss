@@ -1,0 +1,44 @@
+.promo-offers-outer {
+  padding: 96px 0;
+}
+
+.promo-offers-inner {
+  display: flex;
+  gap: 30px;
+  @media screen and (max-width: 420px) {
+    flex-wrap: wrap;
+  }
+  &__item {
+    width: 100%;
+    min-height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:first-child {
+      background: url("../../components/promo/images/banner2.jpg");
+    }
+    &:last-child {
+      background: url("../../components/promo/images/banner3.jpg");
+    }
+  }
+}
+
+.promo-offers-banner {
+  background: white;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+
+  &__header {
+    font-size: 12px;
+    color: rgba(18, 18, 18, 0.6);
+    margin-bottom: 8px;
+  }
+
+  span {
+    color: #e91e63;
+  }
+}

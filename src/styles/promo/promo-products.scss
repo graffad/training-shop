@@ -1,0 +1,47 @@
+.promo-products-outer {
+  margin-top: 96px;
+}
+.promo-products-inner {
+  display: flex;
+  align-items: center;
+  margin-bottom: 48px;
+  &-header {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  &-filters {
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+
+    &__radio {
+      appearance: none;
+      &:checked + span {
+        color: black;
+      }
+    }
+    &__label {
+      margin-left: 32px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: rgba(18, 18, 18, 0.6);
+    }
+  }
+}
+
+.promo-products-link-button {
+  margin-top: 48px;
+  width: 100%;
+  padding: 16px 0;
+  text-transform: uppercase;
+  font-family: Spartan, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  background: $grayLight;
+  border: none;
+  cursor: pointer;
+}

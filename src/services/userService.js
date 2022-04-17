@@ -30,7 +30,6 @@ class UserService {
       }
     }
 
-    // const cart = JSON.parse(localStorage.getItem("cart"));
     return localStorage.setItem(
       "cart",
       JSON.stringify([...this.cart(), product])

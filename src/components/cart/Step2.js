@@ -1,24 +1,21 @@
 import { useFormContext, Controller } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import ReactSelect from "react-select";
+import { useSelector } from "react-redux";
 import InputMask from "react-input-mask";
 import { useEffect } from "react";
 import classNames from "classnames";
-import {
-  reduxGetOrderStores,
-  reduxSetOrderStores,
-} from "../../redux/reducers/orderSlice";
 import { MaskPhone } from "../../services/masksWithConditions";
 import { schemaStep2 } from "../../services/validationSchemas";
 import { CustomSelectCountries, CustomSelectCities } from "./CustomInputs";
+import { cartConstTypes } from "../constants/constants";
 
 // DELIVERY INFO STEP
 export default function Step2({ setStep }) {
-  const dispatch = useDispatch();
   const { cartSum } = useSelector((state) => state.cart);
   const { storeCountries, storeCities, isLoading, errorType } = useSelector(
     (state) => state.orderState
   );
+  const { POST_OFFICES, EXPRESS_DELIVERY, STORE_PICKUP, COUNTRIES, CITIES } =
+    cartConstTypes;
   const {
     register,
     trigger,
@@ -28,17 +25,16 @@ export default function Step2({ setStep }) {
     control,
     setValue,
     setError,
-    clearErrors,
   } = useFormContext();
   const deliveryMethod = watch("deliveryMethod");
   const country = watch("country");
   const storeAddress = watch("storeAddress");
   // set custom error to form if request countries || cities is failed
   useEffect(() => {
-    if (errorType === "countries") {
+    if (errorType === COUNTRIES) {
       setError("country", { message: "ошибка загрузки" });
     }
-    if (errorType === "cities") {
+    if (errorType === CITIES) {
       setError("storeAddress", { message: "ошибка загрузки" });
     }
   }, [errorType]);
@@ -141,8 +137,8 @@ export default function Step2({ setStep }) {
             </p>
           )}
         </div>
-        {(deliveryMethod === "pickup from post offices" ||
-          deliveryMethod === "express delivery") && (
+        {(deliveryMethod === POST_OFFICES ||
+          deliveryMethod === EXPRESS_DELIVERY) && (
           <>
             <p className="order-info-title">ADDRESS</p>
             <div
@@ -225,7 +221,7 @@ export default function Step2({ setStep }) {
                 />
               </div>
             </div>
-            {deliveryMethod === "pickup from post offices" && (
+            {deliveryMethod === POST_OFFICES && (
               <>
                 <p className="order-info-title">POSTCODE</p>
                 <div
@@ -244,7 +240,6 @@ export default function Step2({ setStep }) {
                         className="order-info-input"
                         placeholder="BY ______"
                         value={value}
-                        // defaultValue={value}
                         onBlur={onBlur}
                       />
                     )}
@@ -260,7 +255,7 @@ export default function Step2({ setStep }) {
           </>
         )}
 
-        {deliveryMethod === "store pickup" && (
+        {deliveryMethod === STORE_PICKUP && (
           <>
             <p className="order-info-title">ADDRESS OF STORE</p>
             <div
@@ -271,14 +266,14 @@ export default function Step2({ setStep }) {
               <Controller
                 name="country"
                 control={control}
-                render={({ field: { onBlur, onChange, value } }) => (
+                render={({ field: { onBlur } }) => (
                   <CustomSelectCountries
                     array={storeCountries}
                     currentValue={country}
                     setValue={setValue}
                     onBlur={onBlur}
                     trigger={trigger}
-                    isLoading={isLoading === "countries"}
+                    isLoading={isLoading === COUNTRIES}
                   />
                 )}
               />
@@ -297,7 +292,7 @@ export default function Step2({ setStep }) {
               <Controller
                 name="storeAddress"
                 control={control}
-                render={({ field: { onBlur, onChange, value } }) => (
+                render={({ field: { onBlur } }) => (
                   <CustomSelectCities
                     array={storeCities}
                     currentValue={storeAddress}
@@ -307,7 +302,7 @@ export default function Step2({ setStep }) {
                     country={country}
                     setError={setError}
                     disabled={country === ""}
-                    isLoading={isLoading === "cities"}
+                    isLoading={isLoading === CITIES}
                   />
                 )}
               />
