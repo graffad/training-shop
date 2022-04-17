@@ -14,7 +14,6 @@ const subscribeSlice = createSlice({
   reducers: {
     // actions
     reduxGetSubscribe(state, action) {
-      // console.log(action.payload)
       state.isErrorSubscribe = false;
       state.errorMessage = false;
       state.isSuccessSubscribe = false;

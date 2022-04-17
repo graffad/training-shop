@@ -11,10 +11,6 @@ export default function Slider({
   discount = null,
 }) {
   const [sliderNavImages, setSliderNavImages] = useState(null);
-  // const [sliderOne, setSliderOne] = useState(null);
-
-  // problems with image fit with max-wh after link or rerender or resize
-  // unexpected behaviour sometime - shows piece of next slide on rerender
   return (
     <>
       {showImgNav ? (
@@ -42,16 +38,8 @@ export default function Slider({
 
           <Swiper
             onSwiper={setSliderNavImages}
-            // slidesPerView="auto"
             spaceBetween={12}
             className="slider-aside"
-            // direction="vertical"
-            // navigation={{
-            //   prevEl: ".slider-button--top",
-            //   nextEl: ".slider-button--bottom",
-            //   disabledClass: "slider-button--disabled",
-            // }}
-            // controller={{control:sliderOne}}
             breakpoints={{
               360: {
                 slidesPerView: 4,
@@ -81,16 +69,12 @@ export default function Slider({
 
       <Swiper
         slidesPerView={1}
-        onSlideChange={() => console.log("slide change")}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSwiper={setSliderOne}
         className="slider"
         navigation={{
           prevEl: ".slider-slide-prev",
           nextEl: ".slider-slide-next",
           disabledClass: "slider-button--disabled",
         }}
-        // controller={{control:sliderNavImages}}
         thumbs={{
           swiper: sliderNavImages,
           slideThumbActiveClass: "slider-aside__item--active",

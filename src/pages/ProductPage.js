@@ -26,9 +26,7 @@ export default function ProductPage() {
     if (!productData || productData.id !== params.id) {
       dispatch(reduxGetProductProfile(params.id));
     }
-    // if (products[`${params.category}`].length === 0) {
       dispatch(reduxGetProductsDiff(params.category));
-    // }
   }, [params]);
 
   return (

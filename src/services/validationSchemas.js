@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { cartConstTypes } from "../components/constants/constants";
 
 const schemaSubscribe = yup
   .object()
@@ -21,6 +22,21 @@ const schemaReview = yup
 // -------------------ORDER-VALIDATION ▼ -------------------
 // ======================================================
 
+const {
+  POST_OFFICES,
+  EXPRESS_DELIVERY,
+  STORE_PICKUP,
+  PAYPAL,
+  VISA,
+  MASTER_CARD,
+} = cartConstTypes;
+
+function requiredFieldOnDelivery(deliveryMethod) {
+  if (deliveryMethod === POST_OFFICES || deliveryMethod === EXPRESS_DELIVERY) {
+    return yup.string().required("Поле должно быть заполнено");
+  }
+}
+
 // object values for combine validation
 
 const step2Values = {
@@ -34,36 +50,27 @@ const step2Values = {
     .email("невеный email"),
   country: yup.string().required("Поле должно быть заполнено"),
   storeAddress: yup.string().when("deliveryMethod", {
-    is: "store pickup",
+    is: STORE_PICKUP,
     then: yup.string().required("Поле должно быть заполнено"),
   }),
-  city: yup.string().when("deliveryMethod", (deliveryMethod) => {
-    if (
-      deliveryMethod === "pickup from post offices" ||
-      deliveryMethod === "express delivery"
-    ) {
-      return yup.string().required("Поле должно быть заполнено");
-    }
-  }),
-  street: yup.string().when("deliveryMethod", (deliveryMethod) => {
-    if (
-      deliveryMethod === "pickup from post offices" ||
-      deliveryMethod === "express delivery"
-    ) {
-      return yup.string().required("Поле должно быть заполнено");
-    }
-  }),
-  house: yup.string().when("deliveryMethod", (deliveryMethod) => {
-    if (
-      deliveryMethod === "pickup from post offices" ||
-      deliveryMethod === "express delivery"
-    ) {
-      return yup.string().required("Поле должно быть заполнено");
-    }
-  }),
+  city: yup
+    .string()
+    .when("deliveryMethod", (deliveryMethod) =>
+      requiredFieldOnDelivery(deliveryMethod)
+    ),
+  street: yup
+    .string()
+    .when("deliveryMethod", (deliveryMethod) =>
+      requiredFieldOnDelivery(deliveryMethod)
+    ),
+  house: yup
+    .string()
+    .when("deliveryMethod", (deliveryMethod) =>
+      requiredFieldOnDelivery(deliveryMethod)
+    ),
 
   postcode: yup.string().when("deliveryMethod", {
-    is: "pickup from post offices",
+    is: POST_OFFICES,
     then: yup
       .string()
       .required("Поле должно быть заполнено")
@@ -73,17 +80,17 @@ const step2Values = {
     .boolean()
     .oneOf([true], "Вы должны согласиться на обработку личной информации"),
 };
+
 const step3Values = {
-  // values
   cashEmail: yup.string().when("paymentMethod", {
-    is: "paypal",
+    is: PAYPAL,
     then: yup
       .string()
       .required("Поле должно быть заполнено")
       .email("неверный email"),
   }),
   card: yup.string().when("paymentMethod", (paymentMethod) => {
-    if (paymentMethod === "visa" || paymentMethod === "masterCard") {
+    if (paymentMethod === VISA || paymentMethod === MASTER_CARD) {
       return yup
         .string()
         .required("Поле должно быть заполнено")
@@ -92,7 +99,7 @@ const step3Values = {
   }),
 
   cardDate: yup.string().when("paymentMethod", (paymentMethod) => {
-    if (paymentMethod === "visa" || paymentMethod === "masterCard") {
+    if (paymentMethod === VISA || paymentMethod === MASTER_CARD) {
       return yup
         .string()
         .required("Поле должно быть заполнено")
@@ -113,7 +120,7 @@ const step3Values = {
   }),
 
   cardCVV: yup.string().when("paymentMethod", (paymentMethod) => {
-    if (paymentMethod === "visa" || paymentMethod === "masterCard") {
+    if (paymentMethod === VISA || paymentMethod === MASTER_CARD) {
       return yup
         .string()
         .required("Поле должно быть заполнено")
@@ -125,9 +132,6 @@ const step3Values = {
 
 // split diff schemas for validation each step separately
 
-const schemaStep1 = yup.object().shape({
-  // cartItems,
-});
 const schemaStep2 = yup.object().shape({
   ...step2Values,
 });
@@ -141,11 +145,4 @@ const schemaOrder = yup.object().shape({
   ...step3Values,
 });
 
-export {
-  schemaSubscribe,
-  schemaReview,
-  schemaStep1,
-  schemaStep2,
-  schemaStep3,
-  schemaOrder,
-};
+export { schemaSubscribe, schemaReview, schemaStep2, schemaStep3, schemaOrder };

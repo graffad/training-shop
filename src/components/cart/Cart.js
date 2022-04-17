@@ -11,6 +11,7 @@ import Step4 from "./Step4";
 import { schemaOrder } from "../../services/validationSchemas";
 import { reduxGetOrderCountries } from "../../redux/reducers/orderSlice";
 import UserService from "../../services/userService";
+import { cartDefaultValues } from "../constants/constants";
 
 export default function Cart({ isShowCart, setIsShowCart }) {
   const dispatch = useDispatch();
@@ -25,25 +26,8 @@ export default function Cart({ isShowCart, setIsShowCart }) {
   const [isOrderError, setIsOrderError] = useState(false);
 
   const formMethods = useForm({
-    defaultValues: {
-      deliveryMethod: "pickup from post offices",
-      country: "",
-      storeAddress: "",
-      paymentMethod: "visa",
-      phone: "",
-      totalPrice: "",
-      isConfirmed: false,
-      postcode: "",
-      cardDate: "",
-      card: "",
-      cardCVV: "",
-    },
-    // if onChange: error fire from 1st touch, but can be cleared in focus if valid
-    // if onBlur: error fire on blur, but can`t be cleared in focus if valid
-    // if all: only masked fields wont work properly (fires error from 1st)
-    // if combine with hardcode manual onChange : will be large and ugly.
+    defaultValues: cartDefaultValues,
     mode: "onBlur",
-    // reValidateMode: "onChange",
     resolver: yupResolver(schemaOrder),
   });
   const { setValue, unregister, watch, reset, clearErrors } = formMethods;
@@ -53,13 +37,11 @@ export default function Cart({ isShowCart, setIsShowCart }) {
   async function onSubmit(data) {
     setIsOrderError(false);
     setOrderErrorMessage("");
-    console.log(data)
     try {
       const res = await UserService.sendOrder(data);
       setStep(4);
       localStorage.setItem("cart", JSON.stringify([]));
       dispatch(reduxSetCart([]));
-      // reset();
     } catch (err) {
       setIsOrderError(true);
       setOrderErrorMessage(err?.message);
@@ -86,12 +68,15 @@ export default function Cart({ isShowCart, setIsShowCart }) {
   useEffect(() => {
     setValue("products", cartProducts);
     setValue("totalPrice", cartSum?.totalPrice);
+    document.body.className = classNames({ "fixed-body": isShowCart });
   }, [cartProducts, isShowCart]);
 
   // close cart and reset
   useEffect(() => {
+    // fix from docs
+    const initRef = insideAreaRef.current
     function onClickOver(e) {
-      if (isShowCart && !insideAreaRef.current?.contains(e.target)) {
+      if (isShowCart && !initRef?.contains(e.target)) {
         closeCart();
       }
     }
@@ -100,10 +85,10 @@ export default function Cart({ isShowCart, setIsShowCart }) {
       clearErrors(e.target?.name)
     }
     document.addEventListener("click", onClickOver, { capture: true });
-    insideAreaRef.current.addEventListener("focus", onFocusInput, { capture: true });
+    initRef.addEventListener("focus", onFocusInput, { capture: true });
     return () => {
       document.removeEventListener("click", onClickOver);
-      insideAreaRef.current.removeEventListener("focus", onFocusInput);
+      initRef.removeEventListener("focus", onFocusInput);
     };
   }, [isShowCart]);
 
@@ -162,6 +147,11 @@ export default function Cart({ isShowCart, setIsShowCart }) {
         return "";
     }
   }
+  function stepClassName(currentStep = 1) {
+    return classNames("cart-steps__item", {
+      "cart-steps__item--active": step === currentStep,
+    });
+  }
 
   return (
     <div
@@ -183,29 +173,11 @@ export default function Cart({ isShowCart, setIsShowCart }) {
           {cartProducts.length > 0 && step !== 4 && (
             <>
               <div className="cart-steps">
-                <p
-                  className={`cart-steps__item ${
-                    step === 1 && "cart-steps__item--active"
-                  }`}
-                >
-                  Item in Cart
-                </p>
+                <p className={stepClassName(1)}>Item in Cart</p>
                 <span>/</span>
-                <p
-                  className={`cart-steps__item ${
-                    step === 2 && "cart-steps__item--active"
-                  }`}
-                >
-                  Delivery Info
-                </p>
+                <p className={stepClassName(2)}>Delivery Info</p>
                 <span>/</span>
-                <p
-                  className={`cart-steps__item ${
-                    step === 3 && "cart-steps__item--active"
-                  }`}
-                >
-                  Payment
-                </p>
+                <p className={stepClassName(3)}>Payment</p>
               </div>
               <FormProvider {...formMethods}>
                 <form

@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import UserService from "../../services/userService";
-
+import {cartConstTypes} from "../../components/constants/constants";
 import {
   reduxSetOrderCountries,
   reduxSetOrderError,
@@ -8,6 +8,8 @@ import {
   reduxGetOrderStores,
   reduxSetOrderStores,
 } from "../reducers/orderSlice";
+
+const {COUNTRIES,CITIES} = cartConstTypes
 
 function* sagaWorkerOrderCountries() {
   try {
@@ -20,7 +22,7 @@ function* sagaWorkerOrderCountries() {
   } catch (e) {
     yield put(
       reduxSetOrderError({
-        errorType: "countries",
+        errorType: COUNTRIES,
         errorMessage: "ошибка загрузки",
       })
     );
@@ -41,7 +43,7 @@ function* sagaWorkerOrderStores({ payload }) {
   } catch (e) {
     yield put(
       reduxSetOrderError({
-        errorType: "cities",
+        errorType: CITIES,
         errorMessage: "ошибка загрузки",
       })
     );

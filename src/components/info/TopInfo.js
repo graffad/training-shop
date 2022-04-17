@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import classNames from "classnames";
 import { ReactComponent as Share } from "../../images/share.svg";
 import StarsRate from "../products/StarsRate";
 
@@ -31,9 +32,9 @@ export default function TopInfo({ params, productData }) {
             </p>
           </div>
           <h1
-            className={`top-info__title ${
-              params.id ? "top-info__title--big" : ""
-            }`}
+            className={classNames("top-info__title", {
+              "top-info__title--big": params.id,
+            })}
           >
             {params.id ? productData?.name : params.category}
           </h1>
