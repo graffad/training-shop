@@ -1,0 +1,62 @@
+.main-promo-outer {
+  padding: 32px 0;
+}
+
+.main-promo-inner {
+  min-height: 490px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  &--left,
+  &--right {
+    max-width: 540px;
+    width: 100%;
+    display: flex;
+  }
+  .main-promo-inner--left {
+    text-transform: uppercase;
+  }
+  .main-promo-inner--right {
+    flex-wrap: wrap;
+    // ↓ helps to set manual height with gap, but overflows
+    //align-content: flex-start;
+    gap: 30px;
+    justify-content: center;
+  }
+  &__category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    p {
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      background: white;
+      padding: 13px 24px;
+      line-height: 1;
+    }
+    @media screen and (max-width: 576px) {
+      flex-grow: 1;
+    }
+  }
+  &__category:nth-child(1) {
+    flex-basis: 255px;
+    background: url("../../components/promo/images/women.jpg") center no-repeat;
+    background-size: cover;
+  }
+  &__category:nth-child(2) {
+    flex-basis: 255px;
+    background: url("../../components/promo/images/men.jpg") center no-repeat;
+    background-size: cover;
+  }
+  &__category:nth-child(3) {
+    flex-basis: 255px;
+    flex-grow: 1;
+    background: url("../../components/promo/images/accessor.jpg") center
+      no-repeat;
+    background-size: cover;
+  }
+}

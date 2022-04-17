@@ -23,7 +23,7 @@
   padding: 50px;
   background: white;
   position: relative;
-  .stars__item{
+  .stars__item {
     width: 30px;
     height: 30px;
   }
@@ -45,7 +45,7 @@
     border: 2px solid black;
     padding: 5px;
   }
-  &__button{
+  &__button {
     background: black;
     color: white;
     padding: 10px;
@@ -55,15 +55,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    &:hover{
+    &:hover {
       background: $gray;
       color: black;
     }
-    &:active{
+    &:active {
       background: $grayDark;
     }
   }
-  &__error{
+  &__error {
     color: #e91e63;
     font-size: 12px;
   }
