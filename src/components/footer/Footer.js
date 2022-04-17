@@ -3,6 +3,17 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  footerNavUseful,
+  footerNavInfo,
+  footerNavCategories,
+} from "../constants/constants";
+import { schemaSubscribe } from "../../services/validationSchemas";
+import {
+  reduxGetSubscribe,
+  reduxHideSubscribeSuccess,
+} from "../../redux/reducers/subscribeSlice";
+// icons
 import { ReactComponent as Phone } from "./icons/phone.svg";
 import { ReactComponent as Map } from "./icons/map.svg";
 import { ReactComponent as Time } from "./icons/time.svg";
@@ -18,18 +29,8 @@ import visa from "../../images/credit-cards/visa_x42.png";
 import mastercard from "../../images/credit-cards/mastercard_x42.png";
 import discover from "../../images/credit-cards/discover_x42.png";
 import american from "../../images/credit-cards/american-express_x42.png";
-import {
-  footerNavUseful,
-  footerNavInfo,
-  footerNavCategories,
-} from "../constants/constants";
-import { schemaSubscribe } from "../../services/validationSchemas";
-import {
-  reduxGetSubscribe,
-  reduxHideSubscribeSuccess,
-} from "../../redux/reducers/subscribeSlice";
 
-export default function Footer(props) {
+export default function Footer() {
   const dispatch = useDispatch();
   const {
     isLoadingSubscribe,
@@ -41,7 +42,7 @@ export default function Footer(props) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid }, // isSubmitting ???,
+    formState: { errors, isDirty, isValid },
     reset,
   } = useForm({
     defaultValues: { mail: "" },

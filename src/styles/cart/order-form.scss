@@ -1,0 +1,163 @@
+.order-info-wrapper {
+  overflow-y: auto;
+  @include scrollBar();
+  padding-right: 4px;
+}
+.order-info-list {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 38px;
+  &__text {
+    padding-bottom: 12px;
+    border-bottom: 2px solid $grayLight;
+  }
+  &__item {
+    padding: 12px 0;
+    border-bottom: 2px solid $grayLight;
+    input {
+      margin-right: 15px;
+    }
+  }
+}
+.order-info-title {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.order-info-text--error {
+  color: red;
+  font-weight: 500;
+  font-size: 11px;
+  position: absolute;
+}
+.order-info-input {
+  width: 100%;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 15px;
+  border: none;
+  background: $grayLight;
+  &:focus {
+    outline: transparent;
+  }
+}
+.order-info-input-wrapper {
+  position: relative;
+  margin-bottom: 40px;
+}
+.order-info-input-wrapper--error {
+  .order-info-input {
+    box-shadow: inset 0 0 0 1px red;
+  }
+  .custom-select__control {
+    box-shadow: inset 0 0 0 1px red;
+  }
+}
+.order-info-input-error-text {
+  bottom: -17px;
+  position: absolute;
+  padding-top: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: red;
+}
+.order-info-checkbox-error {
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 500;
+  color: red;
+}
+.radio-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  border: 1px solid black;
+  outline: none;
+  &:checked {
+    background: black;
+    border: 1px solid black;
+    box-shadow: inset 0 0 0 3px white;
+  }
+}
+.checkbox-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 20px;
+  border: 1px solid black;
+  cursor: pointer;
+  &:checked {
+    background: url("../../../public/mark-V.svg") no-repeat center;
+  }
+  &--error {
+    border: 1px solid red;
+  }
+}
+.order-info-group-input {
+  display: flex;
+  gap: 8px;
+  input {
+    margin-bottom: 0;
+  }
+  &__password {
+    width: 100%;
+    display: flex;
+    position: relative;
+  }
+  .password-eye {
+    background: $grayLight;
+    padding-right: 15px;
+  }
+}
+.order-info-label-ch {
+  font-size: 14px;
+  display: flex;
+  span {
+    margin-left: 15px;
+  }
+}
+
+// ----custom-select
+.order-info-select-wrapper {
+  position: relative;
+}
+.select-arrow {
+  transform: rotate(-90deg);
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  pointer-events: none;
+  &--active {
+    transform: rotate(90deg);
+  }
+}
+.select-loader {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+}
+.options-menu {
+  margin-top: 4px;
+  box-shadow: 0 0 3px 1px $grayDark;
+  display: flex;
+  flex-direction: column;
+  margin-right: 2px;
+  margin-left: 2px;
+  &__item {
+    text-align: left;
+    padding: 15px;
+    &:hover {
+      background: $grayLight;
+    }
+    &--active {
+      background: $grayLight;
+    }
+  }
+}

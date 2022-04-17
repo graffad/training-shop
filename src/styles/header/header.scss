@@ -1,0 +1,86 @@
+.header {
+  box-shadow: 2px 2px 0 2px $grayLight;
+  // fix scroll for cart counter
+  overflow: hidden;
+  position: relative;
+}
+.header-contacts-outer {
+  background: #121212;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  padding: 6px 0;
+}
+.header-contacts-inner {
+  display: flex;
+  align-items: flex-end;
+  svg:not(.social-icons__item) {
+    margin-right: 10px;
+  }
+  &__item:not(:last-child) {
+    margin-right: 30px;
+  }
+
+  &__item:last-child {
+    margin-left: auto;
+  }
+}
+.social-icons__item {
+  margin-left: 12px;
+}
+.header-menu-wrapper {
+  display: flex;
+  padding: 15px 0;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: 360px) {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+.header-logo {
+  font-family: "Playfair Display SC", serif;
+  font-size: 24px;
+}
+.header-nav {
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 585px;
+  width: 100%;
+  margin: 0 10px;
+  &__item--active {
+    font-weight: bold;
+  }
+  @media screen and (max-width: 950px) {
+    display: none;
+  }
+}
+.header-controls {
+  display: flex;
+  justify-content: space-between;
+  max-width: 164px;
+  width: 100%;
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+  &__item {
+    position: relative;
+    display: flex;
+    cursor: pointer;
+  }
+  .header-cart-counter {
+    position: absolute;
+    top: -7px;
+    right: -11px;
+    font-size: 9px;
+    color: white;
+    background: #121212;
+    padding: 5px 5px 2px;
+    border-radius: 50%;
+    line-height: 1;
+    font-weight: bold;
+    border: 2px solid white;
+  }
+}

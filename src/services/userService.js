@@ -30,7 +30,6 @@ class UserService {
       }
     }
 
-    // const cart = JSON.parse(localStorage.getItem("cart"));
     return localStorage.setItem(
       "cart",
       JSON.stringify([...this.cart(), product])
@@ -91,8 +90,10 @@ class UserService {
   }
 
   async createSubscribe(mailObj) {
-    const res = await axios.post("https://training.cleverland.by/shop/email",{mailObj})
-    return res
+    const res = await axios.post("https://training.cleverland.by/shop/email", {
+      mailObj,
+    });
+    return res;
   }
 
   async createReview(obj) {
@@ -102,6 +103,30 @@ class UserService {
     );
     return res;
   }
+
+  async getCountries() {
+    const res = await axios.get(
+      "https://training.cleverland.by/shop/countries"
+    );
+    return res;
+  }
+
+  async getCities(city, country) {
+    const res = await axios.post(
+      "https://training.cleverland.by/shop/search/cities",
+      { city, country }
+    );
+    return res;
+  }
+
+  sendOrder(data) {
+    const newData = {
+      ...data,
+      phone: data.phone.replace(/(\(|\))/g, ""),
+      paymentMethod: data.paymentMethod.replace(/(visa|masterCard)/g, "card"),
+    };
+    delete newData.isConfirmed
+    return axios.post("https://training.cleverland.by/shop/cart",{...newData})}
 }
 
 export default new UserService();

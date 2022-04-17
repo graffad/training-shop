@@ -1,0 +1,65 @@
+.promo-blog-outer {
+  margin-top: 96px;
+  margin-bottom: 44px;
+}
+.promo-blog-inner {
+  display: flex;
+  margin-bottom: 48px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  align-items: center;
+  &__header {
+    font-weight: 600;
+    font-size: 22px;
+  }
+  &__link {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.6;
+  }
+}
+.posts-inner {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+
+  @media screen and (max-width: 720px) {
+    flex-wrap: wrap;
+  }
+  &-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__image {
+      max-width: 350px;
+      max-height: 276px;
+      position: relative;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    &__preview {
+      background: white;
+      max-width: 302px;
+      padding: 24px 16px 52px;
+      margin-top: -56px;
+      z-index: 2;
+
+      &-header {
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      &-text {
+        font-size: 14px;
+        margin-top: 12px;
+        color: rgba(18, 18, 18, 0.8);
+        @include limitMaxRows();
+      }
+    }
+  }
+}

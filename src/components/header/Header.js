@@ -1,6 +1,9 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
+import classNames from "classnames";
+import Cart from "../cart/Cart";
+import { headerNav } from "../constants/constants";
 // icons
 import { ReactComponent as Phone } from "./icons/phone.svg";
 import { ReactComponent as Map } from "./icons/map.svg";
@@ -13,8 +16,6 @@ import { ReactComponent as SearchSvg } from "./icons/search.svg";
 import { ReactComponent as GlobusSvg } from "./icons/globus.svg";
 import { ReactComponent as ProfileSvg } from "./icons/profile.svg";
 import { ReactComponent as CartSvg } from "./icons/cart.svg";
-import { headerNav } from "../constants/constants";
-import Cart from "../cart/Cart";
 
 export default function Header() {
   const cartCounter = useSelector((state) => state.cart.cartSum.num);
@@ -32,17 +33,9 @@ export default function Header() {
   function onClickOver(el) {
     if (!el.className.split(" ").some((cl) => /burger*/.test(cl))) {
       setBurgerIsActive(false);
-      // document.body.classList.remove("fixed-body");
-    }
-    if (
-      el.classList.contains("cart--active") ||
-      el.classList.contains("close-cart")
-    ) {
-      setIsShowCart(false);
     }
   }
   useEffect(() => {
-    // document.body.classList.remove("fixed-body");
     window.addEventListener("resize", onResize);
     document.addEventListener("click", (event) => {
       onClickOver(event.target);
@@ -103,7 +96,9 @@ export default function Header() {
                   to={`/${item.path}`}
                   data-test-id={`menu-link-${item.path}`}
                   className={({ isActive }) =>
-                    isActive ? "header-nav__item--active" : "header-nav__item"
+                    classNames("header-nav__item", {
+                      "header-nav__item--active": isActive,
+                    })
                   }
                 >
                   {item.name}
@@ -126,13 +121,12 @@ export default function Header() {
               <button
                 onClick={() => {
                   setBurgerIsActive(!burgerIsActive);
-                  // document.body.classList.toggle("fixed-body");
                 }}
                 type="button"
                 data-test-id="burger-menu-btn"
-                className={`header-controls__item burger-btn ${
-                  burgerIsActive ? "burger-btn--active" : ""
-                }`}
+                className={classNames("header-controls__item burger-btn", {
+                  "burger-btn--active": burgerIsActive,
+                })}
               >
                 <span className="burger-btn__icon" />
               </button>
@@ -146,7 +140,9 @@ export default function Header() {
         style={{
           top: `${burgerMargin}px`,
         }}
-        className={`burger-menu ${burgerIsActive ? "burger-menu--active" : ""}`}
+        className={classNames("burger-menu", {
+          "burger-menu--active": burgerIsActive,
+        })}
         data-test-id="burger-menu"
       >
         <div className="burger-menu-nav" data-test-id="menu">
@@ -156,9 +152,9 @@ export default function Header() {
               to={`/${item.path}`}
               data-test-id={`menu-link-${item.path}`}
               className={({ isActive }) =>
-                isActive
-                  ? "burger-menu-nav__item--active"
-                  : "burger-menu-nav__item"
+                classNames("burger-menu-nav__item", {
+                  "burger-menu-nav__item--active": isActive,
+                })
               }
             >
               {item.name}
@@ -167,7 +163,7 @@ export default function Header() {
         </div>
       </div>
 
-      <Cart isShowCart={isShowCart} />
+      <Cart isShowCart={isShowCart} setIsShowCart={setIsShowCart} />
     </>
   );
 }

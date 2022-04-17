@@ -2,13 +2,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import person1 from "./images/person1.png";
-import person2 from "./images/person2.png";
 import { schemaSubscribe } from "../../services/validationSchemas";
 import {
   reduxGetSubscribe,
   reduxHideSubscribeSuccess,
 } from "../../redux/reducers/subscribeSlice";
+// img
+import person1 from "./images/person1.png";
+import person2 from "./images/person2.png";
 
 export default function PromoSubscribe() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export default function PromoSubscribe() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid }, // isSubmitting ???
+    formState: { errors, isDirty, isValid },
     reset,
   } = useForm({
     defaultValues: { mail: "" },

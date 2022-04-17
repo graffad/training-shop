@@ -3,11 +3,12 @@ import { ReactComponent as Trash } from "../../images/trash.svg";
 import UserService from "../../services/userService";
 import { reduxSetCart } from "../../redux/reducers/cartSlice";
 
-export default function Step1({ register, errors }) {
+export default function Step1({ setStep }) {
   const cartProducts = useSelector((state) => state.cart.products);
   const { cartSum } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+  // CART ITEMS STEP
   return (
     <>
       <ul className="cart-products-list">
@@ -83,6 +84,16 @@ export default function Step1({ register, errors }) {
       <div className="cart-products-total-price">
         <span>Total</span>${cartSum.totalPrice.toFixed(2)}
       </div>
+
+      <button
+        type="button"
+        className="cart-form-submit-btn"
+        onClick={() => {
+          setStep(2);
+        }}
+      >
+        FURTHER
+      </button>
     </>
   );
 }
